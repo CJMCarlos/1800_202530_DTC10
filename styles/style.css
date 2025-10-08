@@ -1,0 +1,29 @@
+.navbar .container-fluid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-brand svg {
+  vertical-align: middle;
+}
+
+.navbar form {
+  flex: 1;
+  max-width: 400px;
+  margin: 0 1rem;
+}
+
+.navbar .navbar-toggler {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  border: none;
+}
+
+.nav-text {
+  color: black;
+  font-size: small;
+}
