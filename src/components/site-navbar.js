@@ -1,37 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Our BCIT Project</title>
-    <meta name="comp1800 template" content="My 1800 App" />
-
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Other libraries go here -->
-    <script type="module" src="./src/main.js"></script>
-    <!-- Link to styles of your own -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="./styles/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    />
-    <script type="module" src="./src/components/site-navbar.js"></script>
-    <script type="module" src="./src/components/site-footer.js"></script>
-  </head>
-
-  <body>
-    <!-- Navbar - Austyn-->
-<<<<<<< Updated upstream
+class SiteNavbar extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="login.html">
           <svg
             width="48"
             height="51"
@@ -49,108 +21,10 @@
             />
           </svg>
         </a>
-        <div>
-          <form class="d-flex" role="search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-          </form>
-        </div>
-
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-          <span class="nav-text">Setting</span>
-        </button>
       </div>
     </nav>
+    `;
+  }
+}
 
-    <link rel="stylesheet" href="./styles/style.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-=======
-    <site-navbar></site-navbar>
-
-    <!-- welcome page - jericho-->
-    <div>
-      <h1 class="display-5 fw-bold text-body-emphasis">Welcome, John Smith!</h1>
-    </div>
-
-    <div>
-      <h2 class="display-6 fw-bold text-body-emphasis mt-4">Overview:</h2>
-    </div>
-
-    <div>
-      <h1 class="fs-3 fw-bold mt-4">Calendar:</h1>
-      <img
-        src="https://imgs.search.brave.com/XBUbMqqzCqt2QeA0U0UoEP092LawYp39P0X3vgTc8Zc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly83Y2Fs/ZW5kYXIuY29tL2Nh/bGVuZGFyL21vbnRo/bHkvcG5nLzEwLTIw/MjUtYTQtbC0wLTEy/LWVuLnBuZw"
-        class="w-50 h-75"
-      />
-    </div>
-
-    <div>
-      <h1 class="fs-3 fw-bold mt-4">Tasks Due:</h1>
-    </div>
-
-    <div>
-      <h2 class="border rounded-4 mt-3">
-        Drop off the kids<input
-          class="form-check-input ms-3"
-          type="checkbox"
-          value=""
-          id="checkDefault"
-        />
-      </h2>
-      <h2 class="border rounded-4 mt-3">
-        Get flowers for the wife<input
-          class="form-check-input ms-3"
-          type="checkbox"
-          value=""
-          id="checkDefault"
-        />
-      </h2>
-      <h2 class="border rounded-4 mt-3">
-        Sign the divorce papers<input
-          class="form-check-input ms-3"
-          type="checkbox"
-          value=""
-          id="checkDefault"
-        />
-      </h2>
-      <h2 class="border rounded-4 mt-3">
-        Grab a cold one with the boys<input
-          class="form-check-input ms-3"
-          type="checkbox"
-          value=""
-          id="checkDefault"
-        />
-      </h2>
-      <h2 class="border rounded-4 mt-3">
-        Move into friends house<input
-          class="form-check-input ms-3"
-          type="checkbox"
-          value=""
-          id="checkDefault"
-        />
-      </h2>
-    </div>
-
-    <!-- footer -->
-    <site-footer></site-footer>
->>>>>>> Stashed changes
-  </body>
-</html>
+customElements.define("site-navbar", SiteNavbar);
