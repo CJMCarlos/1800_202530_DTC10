@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Login</title>
+    <title>Our BCIT Project</title>
     <meta name="comp1800 template" content="My 1800 App" />
 
     <!-- Required meta tags -->
@@ -24,98 +24,12 @@
     />
     <script type="module" src="./src/components/site-navbar.js"></script>
     <script type="module" src="./src/components/site-footer.js"></script>
-    <!--Font-->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap"
-      rel="stylesheet"
-    />
   </head>
-  <body class="body-bg">
+  <body>
     <!-- Navbar -->
     <site-navbar></site-navbar>
 
-    <!-- Main -->
-    <div class="container py-5" style="max-width: 420px">
-      <!-- Alerts -->
-      <div id="authAlert" class="alert alert-danger d-none" role="alert"></div>
-
-      <!-- Login -->
-      <div id="loginView">
-        <h3 class="mb-3 text-center">Login</h3>
-        <form id="loginForm" novalidate>
-          <div class="mb-3">
-            <input
-              type="email"
-              id="loginEmail"
-              class="form-control"
-              placeholder="Email"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <input
-              type="password"
-              id="loginPassword"
-              class="form-control"
-              placeholder="Password"
-              required
-            />
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Login</button>
-        </form>
-        <small class="d-block mt-3 text-center">
-          Don’t have an account?
-          <a href="#" id="toSignup">Sign up</a>
-        </small>
-      </div>
-
-      <!-- Signup -->
-      <div id="signupView" class="d-none">
-        <h3 class="mb-3 text-center">Sign Up</h3>
-        <form id="signupForm" novalidate>
-          <div class="mb-3">
-            <input
-              type="text"
-              id="signupName"
-              class="form-control"
-              placeholder="First and Last Name"
-              aria-label="Full name"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <input
-              type="email"
-              id="signupEmail"
-              class="form-control"
-              placeholder="Email"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <input
-              type="password"
-              id="signupPassword"
-              class="form-control"
-              placeholder="Password"
-              required
-            />
-          </div>
-          <button type="submit" class="btn btn-success w-100">
-            Create Account
-          </button>
-        </form>
-        <small class="d-block mt-3 text-center">
-          Already have an account?
-          <a href="#" id="toLogin">Login</a>
-        </small>
-      </div>
-    </div>
-
     <!-- Footer -->
     <site-footer></site-footer>
-    <script type="module" src="/src/loginSignup.js"></script>
   </body>
 </html>

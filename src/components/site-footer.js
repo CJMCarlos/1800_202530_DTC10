@@ -1,7 +1,7 @@
 class SiteFooter extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
-    <footer class="navbar fixed-bottom">
+    <footer class="navbar bg-secondary-subtle fixed-bottom">
       <div class="container py-1 d-flex justify-content-around text-center">
         <!-- Home Button -->
         <a class="navbar-brand" href="index.html">

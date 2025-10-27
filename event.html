@@ -1,62 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Events | TimeMate</title>
+    <title>Our BCIT Project</title>
+    <meta name="comp1800 template" content="My 1800 App" />
+
+    <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Bootstrap -->
+    <!-- Other libraries go here -->
+    <script type="module" src="./src/main.js"></script>
+    <!-- Link to styles of your own -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
     />
-
-    <!-- Custom CSS + Fonts -->
     <link rel="stylesheet" href="./styles/style.css" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
     />
-
-    <!-- Components -->
     <script type="module" src="./src/components/site-navbar.js"></script>
     <script type="module" src="./src/components/site-footer.js"></script>
   </head>
-
-  <body class="body-bg">
+  <body>
+    <!-- Navbar -->
     <site-navbar></site-navbar>
 
-    <div class="container py-5" style="max-width: 480px">
-      <h3 class="text-center mb-4">My Events</h3>
-
-      <div
-        id="eventList"
-        class="p-3 bg-light rounded shadow-sm text-center border"
-      >
-        <p class="text-muted m-0">No events yet.</p>
-      </div>
-
-      <div class="d-flex justify-content-end mt-4">
-        <button id="addEventBtn" class="btn btn-success px-4">
-          + Add Event
-        </button>
-      </div>
-    </div>
-
+    <!-- Footer -->
     <site-footer></site-footer>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const addEventBtn = document.getElementById("addEventBtn");
-        const eventList = document.getElementById("eventList");
-
-        addEventBtn.addEventListener("click", () => {
-          console.log("✅ Add Event button was clicked!");
-        });
-
-        eventList.addEventListener("mouseenter", () => {
-          console.log("🖱️ Mouse entered event list area!");
-        });
-      });
-    </script>
   </body>
 </html>
