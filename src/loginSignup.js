@@ -1,18 +1,15 @@
+// -------------------------------------------------------------
+// src/loginSignup.js
+// -------------------------------------------------------------
+// Part of the COMP1800 Projects 1 Course (BCIT).
+// Starter code provided for students to use and adapt.
+// Manages the login/signup form behaviour and redirects.
+// -------------------------------------------------------------
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
 import "/styles/style.css";
-// Tem
-const loginUser = async (email, password) => {
-  console.log(`Mock login: ${email}, ${password}`);
-  alert("✅ Login success (mock)");
-};
-
-const signupUser = async (name, email, password) => {
-  console.log(`Mock signup: ${name}, ${email}`);
-  alert("✅ Signup success (mock)");
-};
-
-const authErrorMessage = (err) => err.message || "Unknown error";
+import { loginUser, signupUser, authErrorMessage } from "./authentication.js";
 
 // --- Login and Signup Page ---
 // Handles toggling between Login/Signup views and form submits
