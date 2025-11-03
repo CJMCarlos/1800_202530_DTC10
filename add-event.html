@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Add Event | TimeMate</title>
+    <title>Add Task | TimeMate</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -21,11 +21,11 @@
     <site-navbar></site-navbar>
 
     <div class="container py-5" style="max-width: 480px">
-      <h3 class="text-center mb-4">Add New Event</h3>
+      <h3 class="text-center mb-4">Add New Task</h3>
 
       <form id="addEventForm" class="bg-light p-4 rounded shadow-sm">
         <div class="mb-3">
-          <label for="eventName" class="form-label">Event Name</label>
+          <label for="eventName" class="form-label">Task Name</label>
           <input
             type="text"
             class="form-control"
@@ -46,7 +46,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="eventDate" class="form-label">Event Date</label>
+          <label for="eventDate" class="form-label">Task Date</label>
           <input type="date" class="form-control" id="eventDate" required />
         </div>
 
@@ -59,19 +59,33 @@
           </select>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Add Event</button>
+        <button type="submit" class="btn btn-primary w-100">Add Task</button>
       </form>
     </div>
 
     <site-footer></site-footer>
 
-    <script>
+    <script type="module">
+      import { addTaskForCurrentUser } from "./src/tasksClient.js";
+
       document
         .getElementById("addEventForm")
-        .addEventListener("submit", function (e) {
+        .addEventListener("submit", async function (e) {
           e.preventDefault();
-          alert("Event added! (Demo only)");
-          window.location.href = "event.html";
+
+          try {
+            const taskData = {
+              title: document.getElementById("eventName").value.trim(),
+              details: document.getElementById("eventDescription").value.trim(),
+              dueDate: document.getElementById("eventDate").value,
+            };
+
+            await addTaskForCurrentUser(taskData);
+            window.location.href = "event.html"; // Redirect on success
+          } catch (err) {
+            console.error("Failed to add task:", err);
+            alert("Failed to save task. Please make sure you are signed in.");
+          }
         });
     </script>
   </body>
