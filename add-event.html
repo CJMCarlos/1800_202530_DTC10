@@ -50,15 +50,6 @@
           <input type="date" class="form-control" id="eventDate" required />
         </div>
 
-        <div class="mb-3">
-          <label for="reminder" class="form-label">Reminder</label>
-          <select class="form-select" id="reminder">
-            <option value="none">No reminder</option>
-            <option value="1">1 day before</option>
-            <option value="3">3 days before</option>
-          </select>
-        </div>
-
         <button type="submit" class="btn btn-primary w-100">Add Task</button>
       </form>
     </div>
@@ -66,27 +57,70 @@
     <site-footer></site-footer>
 
     <script type="module">
-      import { addTaskForCurrentUser } from "./src/tasksClient.js";
+      import {
+        addTaskForCurrentUser,
+        getTaskById,
+        updateTask,
+      } from "./src/tasksClient.js";
 
-      document
-        .getElementById("addEventForm")
-        .addEventListener("submit", async function (e) {
-          e.preventDefault();
+      const urlParams = new URLSearchParams(window.location.search);
+      const taskId = urlParams.get("id");
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        const form = document.getElementById("addEventForm");
+        const titleInput = document.getElementById("eventName");
+        const descInput = document.getElementById("eventDescription");
+        const dateInput = document.getElementById("eventDate");
+        const title = document.querySelector("h3");
+        const submitBtn = document.querySelector("button[type='submit']");
+
+        if (taskId) {
+          title.textContent = "Edit Task";
+          submitBtn.textContent = "Save Changes";
 
           try {
-            const taskData = {
-              title: document.getElementById("eventName").value.trim(),
-              details: document.getElementById("eventDescription").value.trim(),
-              dueDate: document.getElementById("eventDate").value,
-            };
-
-            await addTaskForCurrentUser(taskData);
-            window.location.href = "event.html"; // Redirect on success
+            const task = await getTaskById(taskId);
+            titleInput.value = task.title || "";
+            descInput.value = task.description || "";
+            if (task.dueDate?.seconds) {
+              dateInput.value = new Date(task.dueDate.seconds * 1000)
+                .toISOString()
+                .split("T")[0];
+            }
           } catch (err) {
-            console.error("Failed to add task:", err);
+            console.error("Failed to load task:", err);
+            alert("Could not load task for editing.");
+          }
+        }
+
+        // when form submit
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const taskData = {
+            title: titleInput.value.trim(),
+            description: descInput.value.trim(),
+            dueDate: dateInput.value ? new Date(dateInput.value) : null,
+          };
+
+          try {
+            if (taskId) {
+              //
+              await updateTask(taskId, taskData);
+            } else {
+              //
+              await addTaskForCurrentUser(taskData);
+              alert("Task added successfully!");
+            }
+
+            // back to event list
+            window.location.href = "event.html";
+          } catch (err) {
+            console.error("Failed to save task:", err);
             alert("Failed to save task. Please make sure you are signed in.");
           }
         });
+      });
     </script>
   </body>
 </html>

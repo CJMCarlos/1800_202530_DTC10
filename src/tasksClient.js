@@ -1,12 +1,15 @@
 // src/tasksClient.js
-import { db } from "./firebaseConfig.js";
-import { auth } from "./firebaseConfig.js";
+import { db, auth } from "./firebaseConfig.js";
 import {
   collection,
   addDoc,
   query,
   where,
   onSnapshot,
+  doc,
+  deleteDoc,
+  getDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 /**
@@ -15,7 +18,7 @@ import {
  * @param {string} task.title
  * @param {string} task.details
  * @param {string} task.dueDate
- * @returns {Promise<string>} 
+ * @returns {Promise<string>}
  */
 export async function addTaskForCurrentUser(task) {
   const user = auth.currentUser;
@@ -60,4 +63,36 @@ export function listenToUserTasks(onTasksUpdate) {
     });
     onTasksUpdate(tasks);
   });
+}
+
+/**
+ * Delete a task by its ID (for current user)
+ * @param {string} taskId
+ * @returns {Promise<void>}
+ */
+export async function deleteTaskForCurrentUser(taskId) {
+  const user = auth.currentUser;
+  if (!user) throw new Error("Must be signed in to delete tasks");
+
+  const taskRef = doc(db, "tasks", taskId);
+
+  await deleteDoc(taskRef);
+}
+
+/**
+ * Get one task by ID
+ */
+export async function getTaskById(taskId) {
+  const taskRef = doc(db, "tasks", taskId);
+  const snap = await getDoc(taskRef);
+  if (!snap.exists()) throw new Error("Task not found");
+  return { id: snap.id, ...snap.data() };
+}
+
+/**
+ * Update a task
+ */
+export async function updateTask(taskId, updatedData) {
+  const taskRef = doc(db, "tasks", taskId);
+  await updateDoc(taskRef, updatedData);
 }
