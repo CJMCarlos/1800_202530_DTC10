@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>EachEvent | TimeMate</title>
+    <meta name="comp1800 template" content="My 1800 App">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Web Components for shared navbar and footer layout -->
+    <!-- <script type="module" src="/src/components/site-navbar.js"></script> -->
+    <!-- <script type="module" src="/src/components/site-footer.js"></script> -->
+</head>
+
+<body>
+    <!------------------------------>
+    <!-- Your HTML Layout go here -->
+    <!------------------------------>
+
+    <!-- our own navbar goes here -->
+    <site-navbar>
+        <script type="module" src="/src/components/site-navbar.js"></script>
+    </site-navbar>
+    <!-- Main content goes here -->
+<main class="container py-4">
+    <div class="container-fluid bg-light text-dark p-5">
+        <h1>Events</h1>
+        <div id="events-go-here" class="row">
+            </div>
+    </div>
+
+    <template id="eventCardTemplate">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text"></p>
+                    <p>Length: <span class="card-length"></span> km</p>
+                </div>
+            </div>
+        </div>
+    </template>
+</main>
+    <!-- our own footer goes here -->
+    <site-footer>
+            <script type="module" src="/src/components/site-footer.js"></script>
+    </site-footer>
+    <!---------------------------------------------->
+    <!-- Your own JavaScript scripts go here      -->
+    <!---------------------------------------------->
+    <script type="module" src="/src/app.js"></script>
+    <script type="module" src="/src/eachTask.js"></script>
+    <script type="module" src="/src/app.js"></script>
+
+</body>
+
+</html>
