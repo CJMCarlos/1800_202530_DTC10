@@ -28,7 +28,7 @@ export async function addTaskForCurrentUser(task) {
   const taskDoc = {
     ownerId: user.uid,
     title: task.title,
-    description: task.details || "",
+    description: task.description || "",
     dueDate: task.dueDate ? new Date(task.dueDate) : null,
   };
 
