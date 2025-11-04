@@ -24,25 +24,14 @@
         <script type="module" src="/src/components/site-navbar.js"></script>
     </site-navbar>
     <!-- Main content goes here -->
-<main class="container py-4">
-    <div class="container-fluid bg-light text-dark p-5">
-        <h1>Events</h1>
-        <div id="events-go-here" class="row">
-            </div>
-    </div>
+    <main class="container py-4">
+    <h1 id="taskName">Loading task...</h1>
+    <img id="taskImage" src="./images/default.jpg" alt="Task image">
+    <p id="taskDescription"></p>
+    <p id="taskDueDate"></p>
 
-    <template id="eventCardTemplate">
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title"></h5>
-                    <p class="card-text"></p>
-                    <p>Length: <span class="card-length"></span> km</p>
-                </div>
-            </div>
-        </div>
-    </template>
-</main>
+    <a href="main.html" class="back-link">← Back to Tasks</a>
+    </main>
     <!-- our own footer goes here -->
     <site-footer>
             <script type="module" src="/src/components/site-footer.js"></script>
@@ -52,7 +41,6 @@
     <!---------------------------------------------->
     <script type="module" src="/src/app.js"></script>
     <script type="module" src="/src/eachTask.js"></script>
-    <script type="module" src="/src/app.js"></script>
 
 </body>
 

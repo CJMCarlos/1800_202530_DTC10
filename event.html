@@ -24,28 +24,24 @@
       <h3 class="text-center mb-4">My Events</h3>
 
       <div id="eventList" class="p-3 bg-light rounded shadow-sm border">
-        <div id="loadingTasks" class="text-center">
-          <p class="text-muted m-0">Loading tasks...</p>
-        </div>
-      </div>
-
   <div class="container-fluid bg-light text-dark p-5">
-      <h1>Events</h1>
       <div id="events-go-here" class="row">
           </div>
   </div>
 
-  <template id="hikeCardTemplate">
-      <div class="col">
-          <div class="card">
-              <div class="card-body">
-                  <h5 class="card-title"></h5>
-                  <p class="card-text"></p>
-                  <p>Length: <span class="card-length"></span> km</p>
-              </div>
-          </div>
+    <template id="taskCardTemplate">
+      <div class="task-item mb-3 p-3 border rounded bg-white">
+        <div class="d-flex align-items-center justify-content-between">
+          <h5 class="mb-1 card-title"></h5>
+          <small class="text-muted card-dueDate"></small>
+        </div>
+        <p class="mb-0 text-muted card-description"></p>
+        <div class="text-end mt-2">
+          <button class="btn btn-sm btn-outline-primary edit-btn me-2">Edit</button>
+          <button class="btn btn-sm btn-outline-danger delete-btn">Delete</button>
+        </div>
       </div>
-  </template>
+    </template>
 
       <div class="d-flex justify-content-end mt-4">
         <button id="addEventBtn" class="btn btn-success px-4">

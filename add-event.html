@@ -50,7 +50,11 @@
           <input type="date" class="form-control" id="eventDate" required />
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Add Task</button>
+        <script>
+        addTaskBtn.addEventListener("click", () => {
+          window.location.href = "add-event.html";
+      });
+      </script>
       </form>
     </div>
 

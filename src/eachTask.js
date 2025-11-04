@@ -7,27 +7,44 @@ function getDocIdFromUrl() {
     return params.get("docID");
 }
 
-// Fetch the Event and display its name and image
-async function displayEventInfo() {
+// Fetch the task and display its name and image
+async function displayTaskInfo() {
     const id = getDocIdFromUrl();
 
-    try {
-        const EventRef = doc(db, "Events", id);
-        const EventSnap = await getDoc(eventRef);
-
-        const event = eventSnap.data();
-        const name = event.name;
-        const code = event.code;
-
-        // Update the page
-        document.getElementById("eventName").textContent = name;
-        const img = document.getElementById("eventImage");
-        img.src = `./images/${code}.jpg`;
-        img.alt = `${name} image`;
-    } catch (error) {
-        console.error("Error loading Event:", error);
-        document.getElementById("eventName").textContent = "Error loading event.";
-    }
+    if (!id) {
+    console.error("No docID provided in the URL.");
+    document.getElementById("taskName").textContent = "No task selected.";
+    return;
 }
 
-displayEventInfo();
+    try {
+    // Use 'tasks' collection
+    const taskRef = doc(db, "tasks", id);
+    const taskSnap = await getDoc(taskRef);
+
+    if (!taskSnap.exists()) {
+        console.error("Task not found.");
+        document.getElementById("taskName").textContent = "Task not found.";
+        return;
+    }
+
+    const task = taskSnap.data();
+    const name = task.name;
+    const code = task.code;
+
+    // Update the page
+    document.getElementById("taskName").textContent = name;
+
+    const img = document.getElementById("taskImage");
+    if (img) {
+    img.src = `./images/${code}.jpg`;
+    img.alt = `${name} image`;
+    }
+    } catch (error) {
+    console.error("Error loading task:", error);
+    document.getElementById("taskName").textContent = "Error loading task.";
+}
+}
+
+displayTaskInfo();
+
