@@ -1,13 +1,11 @@
 import { db } from "./firebaseConfig.js";
 import { doc, getDoc } from "firebase/firestore";
 
-// Get the document ID from the URL
 function getDocIdFromUrl() {
-    const params = new URL(window.location.href).searchParams;
+    const params = new URLSearchParams(window.location.search);
     return params.get("docID");
 }
 
-// Fetch the task and display its name and image
 async function displayTaskInfo() {
     const id = getDocIdFromUrl();
 
@@ -15,36 +13,38 @@ async function displayTaskInfo() {
     console.error("No docID provided in the URL.");
     document.getElementById("taskName").textContent = "No task selected.";
     return;
-}
+    }
 
     try {
-    // Use 'tasks' collection
-    const taskRef = doc(db, "tasks", id);
-    const taskSnap = await getDoc(taskRef);
+        const taskRef = doc(db, "tasks", id);
+        const taskSnap = await getDoc(taskRef);
 
-    if (!taskSnap.exists()) {
+        if (!taskSnap.exists()) {
         console.error("Task not found.");
         document.getElementById("taskName").textContent = "Task not found.";
         return;
-    }
+        }
 
-    const task = taskSnap.data();
-    const name = task.name;
-    const code = task.code;
+        const task = taskSnap.data();
 
-    // Update the page
-    document.getElementById("taskName").textContent = name;
+        // Fill in existing page structure (keeps formatting)
+        const taskNameEl = document.getElementById("taskName");
+        const taskDescriptionEl = document.getElementById("taskDescription");
+        const taskDueDateEl = document.getElementById("taskDueDate");
 
-    const img = document.getElementById("taskImage");
-    if (img) {
-    img.src = `./images/${code}.jpg`;
-    img.alt = `${name} image`;
-    }
+        if (taskNameEl) taskNameEl.textContent = task.title || "Untitled Task";
+        if (taskDescriptionEl)
+        taskDescriptionEl.textContent = task.description || "No description.";
+        if (taskDueDateEl) {
+        const date = task.dueDate?.toDate ? task.dueDate.toDate() : task.dueDate;
+        taskDueDateEl.textContent = date
+            ? `Due: ${new Date(date).toDateString()}`
+            : "No due date.";
+        }
     } catch (error) {
-    console.error("Error loading task:", error);
-    document.getElementById("taskName").textContent = "Error loading task.";
-}
+        console.error("Error loading task:", error);
+        document.getElementById("taskName").textContent = "Error loading task.";
+    }
 }
 
 displayTaskInfo();
-
