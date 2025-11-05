@@ -24,10 +24,10 @@
       <h3 class="text-center mb-4">My Events</h3>
 
       <div id="eventList" class="p-3 bg-light rounded shadow-sm border">
-        <div id="loadingTasks" class="text-center">
-          <p class="text-muted m-0">Loading tasks...</p>
-        </div>
-      </div>
+  <div class="container-fluid bg-light text-dark p-5">
+      <div id="events-go-here" class="row">
+          </div>
+  </div>
 
       <div class="d-flex justify-content-end mt-4">
         <button id="addEventBtn" class="btn btn-success px-4">
@@ -35,6 +35,20 @@
         </button>
       </div>
     </div>
+
+  <template id="taskCardTemplate">
+      <div class="col">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title"></h5>
+                  <p class="card-text"></p>
+                  <p>Length: <span class="card-length"></span> km</p>
+              </div>
+          </div>
+      </div>
+  </template>
+
+
 
     <site-footer></site-footer>
     <script type="module">
