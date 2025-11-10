@@ -13,8 +13,8 @@ import {
 } from "firebase/firestore";
 
 export async function addTaskForCurrentUser(task) {
-  const user = auth.currentUser;
   if (!user) throw new Error("Must be signed in to create tasks");
+  const user = auth.currentUser;
 
   // Create the task document with only essential fields
   const taskDoc = {

@@ -24,17 +24,31 @@
       <h3 class="text-center mb-4">My Events</h3>
 
       <div id="eventList" class="p-3 bg-light rounded shadow-sm border">
-        <div id="loadingTasks" class="text-center">
-          <p class="text-muted m-0">Loading tasks...</p>
-        </div>
-      </div>
+  <div class="container-fluid bg-light text-dark p-5">
+      <div id="events-go-here" class="row">
+          </div>
+  </div>
 
       <div class="d-flex justify-content-end mt-4">
         <button id="addEventBtn" class="btn btn-success px-4">
           + Add Task
         </button>
       </div>
-    </div>
+    </div>~
+
+  <template id="taskCardTemplate">
+      <div class="col">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title"></h5>
+                  <p class="card-text"></p>
+                  <p>Length: <span class="card-length"></span> km</p>
+              </div>
+          </div>
+      </div>
+  </template>
+
+
 
     <site-footer></site-footer>
     <script type="module">
@@ -42,9 +56,10 @@
       import { onAuthReady } from "./src/authentication.js";
 
       document.addEventListener("DOMContentLoaded", () => {
-        const addEventBtn = document.getElementById("addEventBtn");
-        const eventList = document.getElementById("eventList");
-        const loadingDiv = document.getElementById("loadingTasks");
+  const addEventBtn = document.getElementById("addEventBtn");
+  const eventList = document.getElementById("eventList");
+  // Render tasks inside this inner container so we don't overwrite the Add button
+  const eventsContainer = document.getElementById("events-go-here");
 
         addEventBtn.addEventListener("click", () => {
           window.location.href = "add-event.html";
@@ -53,15 +68,19 @@
         // Start listening for tasks when user is authenticated
         onAuthReady((user) => {
           if (!user) {
-            loadingDiv.innerHTML =
-              '<p class="text-muted m-0">Please sign in to view your tasks</p>';
+            if (eventsContainer) {
+              eventsContainer.innerHTML =
+                '<p class="text-muted m-0">Please sign in to view your tasks</p>';
+            }
             return;
           }
 
           // Listen for tasks in real-time
           listenToUserTasks((tasks) => {
+            if (!eventsContainer) return;
+
             if (tasks.length === 0) {
-              eventList.innerHTML =
+              eventsContainer.innerHTML =
                 '<p class="text-muted text-center m-0">No tasks yet</p>';
               return;
             }
@@ -105,10 +124,10 @@
               )
               .join("");
 
-            eventList.innerHTML = tasksHtml;
+            eventsContainer.innerHTML = tasksHtml;
 
             //
-            eventList.querySelectorAll(".delete-btn").forEach((btn) => {
+            eventsContainer.querySelectorAll(".delete-btn").forEach((btn) => {
               btn.addEventListener("click", async () => {
                 const taskId = btn.dataset.id;
                 const confirmDelete = confirm(
