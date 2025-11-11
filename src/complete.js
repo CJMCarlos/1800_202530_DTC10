@@ -4,7 +4,7 @@ import {
   query,
   where,
   onSnapshot,
-  orderBy,
+
   doc, 
   deleteDoc
 } from "firebase/firestore";
@@ -73,6 +73,13 @@ onAuthStateChanged(auth, (user) => {
 
 // Action buttons
 function attachListeners() {
+  document.querySelectorAll(".btn-restore").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.id;
+      await updateTask(id, { isCompleted: false });
+    });
+  });
+
   document.querySelectorAll(".btn-delete").forEach((btn) => {
     btn.addEventListener("click", async () => {
       const id = btn.dataset.id;
@@ -81,6 +88,12 @@ function attachListeners() {
   });
 }
 
-async function deleteTask(id) {
-  await deleteDoc(doc(db, "completedTasks", id)); // delete from completedTasks
+async function updateTask(id, data) {
+  const { doc, updateDoc } = await import("firebase/firestore");
+  await updateDoc(doc(db, "tasks", id), data);
 }
+
+async function deleteTask(id) {
+  const { doc, deleteDoc } = await import("firebase/firestore");
+  await deleteDoc(doc(db, "tasks", id));
+};

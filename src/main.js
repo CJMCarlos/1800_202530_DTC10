@@ -8,7 +8,6 @@ import {
   doc,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import { updateDisplayName } from "./authentication.js";
 
 // ✅ Greeting text
 const greetText = ["Good Morning", "Good Afternoon", "Good Evening"];
