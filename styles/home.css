@@ -33,10 +33,13 @@
 }
 
 .greet-combined {
+  display: flex;
   font-size: 28px;
   font-weight: 700;
   color: #51624f;
   margin: 0 0 10px;
+  align-items: center;
+  gap: 8px;
 }
 
 .greet-combined #greet-time {
@@ -75,6 +78,17 @@
   color: #54645a;
   background: #f7f8f6;
   text-decoration: none;
+}
+
+.edit-btn {
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #cdd1ca;
+  color: #54645a;
+  background: #f7f8f6;
+  text-decoration: none;
+  vertical-align: middle;
 }
 
 /* ================================
@@ -252,4 +266,29 @@
     right: 10px;
     bottom: 10px;
   }
+}
+
+/* Inline editor styles for greeting username edit */
+.inline-editor {
+  /* stacked: input on top, actions below */
+  min-width: 0; /* allow the editor to shrink inside flex container */
+}
+.inline-editor .editor-input {
+  font: inherit;
+  font-size: 28px;
+  font-weight: 700;
+  color: #2f2f2f;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #51624f;
+  padding: 0 4px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+.inline-editor .editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
 }

@@ -12,18 +12,9 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-/**
- * Add a new task for the current user
- * @param {Object} task
- * @param {string} task.title
- * @param {string} task.details
- * @param {string} task.dueDate
- * @returns {Promise<string>}
- */
 export async function addTaskForCurrentUser(task) {
-
   if (!user) throw new Error("Must be signed in to create tasks");
-    const user = auth.currentUser;
+  const user = auth.currentUser;
 
   // Create the task document with only essential fields
   const taskDoc = {

@@ -127,6 +127,29 @@ export function onAuthReady(callback) {
 }
 
 // -------------------------------------------------------------
+// updateDisplayName(name)
+// -------------------------------------------------------------
+// Updates the signed-in user's display name in Firebase Auth
+// and updates the users document in Firestore (merge).
+// Returns the updated user object.
+export async function updateDisplayName(name) {
+  if (!auth.currentUser) throw new Error("No signed-in user");
+  await updateProfile(auth.currentUser, { displayName: name });
+
+  try {
+    await setDoc(
+      doc(db, "users", auth.currentUser.uid),
+      { name: name },
+      { merge: true }
+    );
+  } catch (err) {
+    console.warn("Failed to update Firestore user doc:", err);
+  }
+
+  return auth.currentUser;
+}
+
+// -------------------------------------------------------------
 // authErrorMessage(error)
 // -------------------------------------------------------------
 // Maps Firebase Auth error codes to short, user-friendly messages.
