@@ -14,11 +14,13 @@ import { onAuthStateChanged } from "firebase/auth";
 document.addEventListener("DOMContentLoaded", () => {
   const addEventBtn = document.getElementById("addEventBtn");
   const eventList = document.getElementById("eventList");
+  const template = document.getElementById("EventCard");
 
   addEventBtn.addEventListener("click", () => {
     window.location.href = "add-event.html";
   });
 
+  // Load events
   onAuthStateChanged(auth, (user) => {
     if (!user) {
       eventList.innerHTML = `<p>Please sign in to view your events</p>`;
@@ -35,64 +37,40 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     onSnapshot(q, (snap) => {
+      eventList.innerHTML = ""; // reset
+
       if (snap.empty) {
         eventList.innerHTML = `<p style="text-align:center;color:#6d6d6d;">No tasks yet</p>`;
         return;
       }
 
-      const html = snap.docs
-        .map((d) => {
-          const id = d.id;
-          const t = d.data();
-          const done = t.isCompleted === true;
-          const dateStr = t.dueDate || "No due date";
+      snap.docs.forEach((d) => {
+        const id = d.id;
+        const t = d.data();
+        const done = t.isCompleted;
 
-          return `
-<div class="evt-card" data-id="${id}">
-  <div class="evt-top">
-    
-    <div class="evt-left">
+        // Create card
+        const card = template.content.cloneNode(true);
 
-      <!-- Checkbox -->
-      <label class="evt-check">
-        <input 
-          type="checkbox" 
-          class="complete-toggle" 
-          data-id="${id}"
-          ${done ? "checked" : ""}
-        >
-        <svg class="check-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" fill="none" />
-        </svg>
-      </label>
+        // Fill data
+        card.querySelector(".evt-title").textContent = t.title;
+        card.querySelector(".evt-date").textContent =
+          t.dueDate || "No due date";
+        card.querySelector(".evt-desc").textContent = t.description || "";
 
-      <!-- Info -->
-      <div class="evt-info">
+        if (done) {
+          card.querySelector(".evt-title").classList.add("is-done");
+          card.querySelector(".complete-toggle").checked = true;
+        }
 
-        <div class="evt-row">
-          <h5 class="evt-title ${done ? "is-done" : ""}">${t.title}</h5>
-          <small class="evt-date">${dateStr}</small>
-        </div>
+        // Add data attributes
+        card.querySelector(".complete-toggle").dataset.id = id;
+        card.querySelector(".edit-btn").dataset.edit = id;
+        card.querySelector(".delete-btn").dataset.delete = id;
 
-        ${t.description ? `<p class="evt-desc">${t.description}</p>` : ""}
-
-      </div>
-
-    </div>
-
-    <!-- Buttons -->
-    <div class="evt-actions">
-      <button class="evt-btn edit-btn" data-edit="${id}">Edit</button>
-      <button class="evt-btn evt-btn-danger delete-btn" data-delete="${id}">Delete</button>
-    </div>
-
-  </div>
-</div>
-          `;
-        })
-        .join("");
-
-      eventList.innerHTML = html;
+        // Add card to DOM
+        eventList.appendChild(card);
+      });
 
       attachListeners();
     });
@@ -104,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 ------------------------------ */
 
 function attachListeners() {
-  // ✅ Mark complete
+  // Mark complete
   document.querySelectorAll(".complete-toggle").forEach((box) => {
     box.addEventListener("change", async () => {
       const id = box.dataset.id;
@@ -116,16 +94,16 @@ function attachListeners() {
     });
   });
 
-  // ✅ Edit
-  document.querySelectorAll("[data-edit]").forEach((btn) => {
+  // Edit
+  document.querySelectorAll(".edit-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       const id = btn.dataset.edit;
       window.location.href = `add-event.html?id=${id}`;
     });
   });
 
-  // ✅ Delete
-  document.querySelectorAll("[data-delete]").forEach((btn) => {
+  // Delete
+  document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", async () => {
       const id = btn.dataset.delete;
       await deleteDoc(doc(db, "tasks", id));

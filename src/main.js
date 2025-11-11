@@ -1,5 +1,12 @@
 import { db, auth } from "./firebaseConfig.js";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 // ✅ Greeting text
@@ -38,22 +45,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const snap = await getDocs(q);
     const tasks = [];
 
-    snap.forEach((doc) => {
-      const data = doc.data();
+    snap.forEach((docSnap) => {
+      const data = docSnap.data();
       let due = null;
 
-      // ✅ Firestore Timestamp
       if (data.dueDate?.toDate) {
         due = data.dueDate.toDate();
-      }
-      // ✅ String "2025-11-25"
-      else if (typeof data.dueDate === "string") {
+      } else if (typeof data.dueDate === "string") {
         const parsed = new Date(data.dueDate);
         if (!isNaN(parsed)) due = parsed;
       }
 
       tasks.push({
-        id: doc.id,
+        id: docSnap.id,
         ...data,
         due,
       });
@@ -69,6 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // ✅ Only top 5
     const top5 = tasks.slice(0, 5);
 
+    container.innerHTML = ""; // reset list
+
     // ✅ Render
     top5.forEach((task) => {
       const card = template.cloneNode(true);
@@ -80,12 +86,40 @@ document.addEventListener("DOMContentLoaded", () => {
         : "";
 
       // Completed state
+      const checkbox = card.querySelector("input[type='checkbox']");
       if (task.isCompleted) {
         card.querySelector(".evt-title").classList.add("is-done");
-        card.querySelector("input[type='checkbox']").checked = true;
+        checkbox.checked = true;
       }
+
+      // ✅ Inject ID into buttons
+      card.querySelector(".evt-edit").dataset.edit = task.id;
+      card.querySelector(".evt-delete").dataset.delete = task.id;
 
       container.appendChild(card);
     });
+
+    attachHomeListeners();
   });
 });
+
+/* -------------------------
+   ✅ Add Edit / Delete Listeners
+-------------------------- */
+function attachHomeListeners() {
+  // ✅ Edit
+  document.querySelectorAll("[data-edit]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.edit;
+      window.location.href = `add-event.html?id=${id}`;
+    });
+  });
+
+  // ✅ Delete
+  document.querySelectorAll("[data-delete]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.delete;
+      await deleteDoc(doc(db, "tasks", id));
+    });
+  });
+}
