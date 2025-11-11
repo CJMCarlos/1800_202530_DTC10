@@ -10,6 +10,7 @@
 
     <!-- Other libraries go here -->
     <script type="module" src="./src/app.js"></script>
+    <script type="module" src="./src/complete.js"></script>
     <!-- Link to styles of your own -->
     <script type="module" src="./src/components/site-navbar.js"></script>
     <script type="module" src="./src/components/site-footer.js"></script>
@@ -26,41 +27,23 @@
     <site-navbar></site-navbar>
 
     <!--Main-->
-    <div
-      id="event1"
-      class="mt-2"
-      style="
-        border: 2px solid black;
-        padding: 10px;
-        border-radius: 8px;
-        cursor: pointer;
-      "
-    >
-      <h4>Event 1</h4>
-      <p>
-        COMP 1800 Project 1 <br />
-        Dropbox(Lab05) - Clickable Wireframe - Start coding <br />
-        due on Friday, October 10, 2025
-      </p>
+    <div>
+      <template id="TaskCardTemplate">
+        <div class="event-card">
+          <div>
+            <h3 class="event-title"></h3>
+            <p class="event-desc"></p>
+          </div>
+          <p class="event-date"></p>
+          
+          <div class="event-actions">
+            <button class="delete-btn">Delete</button>
+          </div>
+        </div>
+      </template>
+      <div id="completed-tasks-go-here"></div>
     </div>
 
-    <div
-      id="event2"
-      class="mt-2"
-      style="
-        border: 2px solid black;
-        padding: 10px;
-        border-radius: 8px;
-        cursor: pointer;
-      "
-    >
-      <h4>Event 2</h4>
-      <p>
-        COMP 1800 Project 1 <br />
-        Dropbox(Lab05) - Clickable Wireframe - Start coding <br />
-        due on Friday, October 10, 2025
-      </p>
-    </div>
 
     <!-- Footer -->
     <site-footer></site-footer>

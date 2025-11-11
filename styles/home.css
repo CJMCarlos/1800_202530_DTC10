@@ -137,3 +137,27 @@
   text-align: right;
   margin-top: 3px;
 }
+
+.event-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px; /* spacing between date and button */
+}
+
+/* DELETE BUTTON */
+.delete-btn {
+  background: none;
+  border: 1px solid #d33;
+  color: #d33;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: #d33;
+  color: white;
+}

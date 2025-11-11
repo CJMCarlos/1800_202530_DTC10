@@ -1,5 +1,5 @@
 import { db, auth } from "./firebaseConfig.js";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, deleteDoc} from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 onAuthStateChanged(auth, (user) => {
@@ -70,15 +70,57 @@ document.addEventListener("DOMContentLoaded", () => {
     const top5 = tasks.slice(0, 5);
 
     // ✅ Render UI
-    top5.forEach((task) => {
-      const card = template.cloneNode(true);
+  top5.forEach((task) => {
+  const card = template.cloneNode(true);
 
-      card.querySelector(".event-title").textContent = task.title;
-      card.querySelector(".event-desc").textContent = task.description || "";
-      card.querySelector(".event-date").textContent = task.due
-        ? task.due.toISOString().split("T")[0]
-        : "No due date";
+  card.querySelector(".event-title").textContent = task.title;
+  card.querySelector(".event-desc").textContent = task.description || "";
+  card.querySelector(".event-date").textContent = task.due
+    ? task.due.toISOString().split("T")[0]
+    : "No due date";
 
+  // ✅ Find the delete button inside the template
+  const deleteBtn = card.querySelector(".delete-btn");
+
+  // ✅ Attach click handler for deletion
+  deleteBtn.addEventListener("click", async () => {
+    const confirmDelete = confirm("Are you sure you want to delete this task?");
+    if (!confirmDelete) return;
+
+    try {
+      await deleteDoc(doc(db, "tasks", task.id));
+      deleteBtn.closest(".event-card").remove();
+    } catch (err) {
+      console.error("Failed to delete task:", err);
+      alert("Failed to delete task.");
+    }
+  });
+      const completeBtn = card.querySelector(".complete-btn");
+      completeBtn.addEventListener("click", async () => {
+        const confirmComplete = confirm("Mark this task as completed?");
+        if (!confirmComplete) return;
+
+        try {
+          await setDoc(doc(db, "completedTasks", task.id), {
+            ...task,
+            completedAt: new Date().toISOString(),
+            dueDate: task.due ? task.due.toISOString() : null,
+          });
+
+          await deleteDoc(doc(db, "tasks", task.id));
+          card.remove();
+
+          // Short delay to ensure Firestore completes
+          setTimeout(() => {
+            window.location.href = "complete.html";
+          }, 100); // 100ms delay is enough
+        } catch (err) {
+          console.error("Failed to mark task as completed:", err);
+          alert("Failed to mark task as completed.");
+        }
+      });
+
+      // Append card to container
       container.appendChild(card);
     });
   });
