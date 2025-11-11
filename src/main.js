@@ -1,6 +1,14 @@
 import { db, auth } from "./firebaseConfig.js";
-import { collection, query, where, getDocs, doc, deleteDoc} from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import { updateDisplayName } from "./authentication.js";
 
 // ✅ Greeting text
 const greetText = ["Good Morning", "Good Afternoon", "Good Evening"];
@@ -24,6 +32,183 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+// Inline edit username (no popup)
+const editBtn = document.getElementById("editUsernameBtn");
+if (editBtn) {
+  editBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const nameEl = document.getElementById("name-goes-here");
+    if (!nameEl) return;
+
+    const user = auth.currentUser;
+    if (!user) {
+      alert("Please sign in to edit your username.");
+      return;
+    }
+
+    // if already editing, do nothing
+    if (editBtn.dataset.editing === "true") return;
+
+    const current = nameEl.textContent || "";
+
+    // Make parent a flex container so the editor can occupy remaining width
+    const parent = nameEl.parentElement; // h2.greet-combined
+    const prevDisplay = parent.style.display;
+    const prevAlignItems = parent.style.alignItems;
+    const prevGap = parent.style.gap;
+    parent.style.display = "flex";
+    parent.style.alignItems = "center";
+    parent.style.gap = "8px";
+
+    // Create an editor wrapper that fills remaining width and stacks input + actions
+    const editorWrapper = document.createElement("div");
+    editorWrapper.className = "inline-editor";
+    editorWrapper.style.flex = "1 1 auto";
+    editorWrapper.style.minWidth = "0"; // allow flex children to shrink
+    editorWrapper.style.display = "flex";
+    editorWrapper.style.flexDirection = "column";
+    editorWrapper.style.gap = "6px";
+    // keep actions positioned absolutely so they don't increase the wrapper height
+    editorWrapper.style.position = "relative";
+
+    // create inline input with placeholder (stretches full width of wrapper)
+    const input = document.createElement("input");
+    input.type = "text";
+    input.id = "editNameInput";
+    input.value = ""; // empty, placeholder shows original username in grey
+    input.placeholder = current.trim();
+    input.className = "editor-input";
+    // enforce max length of 13 characters on the client
+    input.maxLength = 13;
+    input.setAttribute("maxlength", "13");
+    // style to appear as transparent text with underline
+    input.style.width = "100%";
+    input.style.boxSizing = "border-box";
+    input.style.background = "transparent";
+    input.style.border = "none";
+    input.style.borderBottom = "2px solid #51624f";
+    input.style.outline = "none";
+    input.style.font = "inherit";
+    input.style.color = "#2f2f2f";
+    input.style.fontSize = "28px";
+    input.style.fontWeight = "700";
+    input.style.padding = "0 4px";
+    input.style.transition = "border-color 0.2s ease";
+
+    // actions row (buttons) that sits below the input and aligns right
+    const actionsRow = document.createElement("div");
+    actionsRow.className = "editor-actions";
+    // absolute-position the actions below the input so the input stays vertically centered
+    actionsRow.style.position = "absolute";
+    actionsRow.style.right = "0";
+    actionsRow.style.top = "calc(100% + 6px)";
+    actionsRow.style.display = "flex";
+    actionsRow.style.justifyContent = "flex-end";
+    actionsRow.style.gap = "8px";
+
+    // create Save and Cancel controls
+    const saveBtn = document.createElement("a");
+    saveBtn.href = "#";
+    saveBtn.className = "view-all-btn";
+    saveBtn.textContent = "Save";
+
+    const cancelBtn = document.createElement("a");
+    cancelBtn.href = "#";
+    cancelBtn.className = "view-all-btn";
+    cancelBtn.textContent = "Cancel";
+
+    // assemble editor
+    actionsRow.appendChild(saveBtn);
+    actionsRow.appendChild(cancelBtn);
+    editorWrapper.appendChild(input);
+    editorWrapper.appendChild(actionsRow);
+
+    // insert editor after the name element
+    nameEl.insertAdjacentElement("afterend", editorWrapper);
+
+    // hide the edit button and name element while editing
+    editBtn.style.display = "none";
+    nameEl.style.display = "none";
+    editBtn.dataset.editing = "true";
+
+    input.focus();
+
+    // save handler
+    const onSave = async (ev) => {
+      ev.preventDefault();
+      const newName = input.value.trim();
+      // client-side validation: enforce length <= 13
+      if (newName.length > 13) {
+        alert("Username must be 13 characters or fewer.");
+        input.focus();
+        return;
+      }
+      if (!newName) {
+        alert("Username cannot be empty.");
+        input.focus();
+        return;
+      }
+      if (newName === current.trim()) {
+        // no change
+        cleanup();
+        return;
+      }
+
+      try {
+        await updateDisplayName(newName);
+        nameEl.textContent = newName;
+      } catch (err) {
+        console.error("Failed to update username:", err);
+        alert("Failed to update username. See console for details.");
+      }
+
+      cleanup();
+    };
+
+    // cancel handler
+    const onCancel = (ev) => {
+      ev.preventDefault();
+      cleanup();
+    };
+
+    function cleanup() {
+      // remove created editor and restore edit button
+      try {
+        editorWrapper.remove();
+      } catch (e) {}
+
+      // restore name element and edit button
+      nameEl.style.display = "inline-block";
+      editBtn.style.display = "inline-block";
+      delete editBtn.dataset.editing;
+
+      // restore parent display
+      parent.style.display = prevDisplay || "";
+      parent.style.alignItems = prevAlignItems || "";
+      parent.style.gap = prevGap || "";
+
+      // remove listeners
+      saveBtn.removeEventListener("click", onSave);
+      cancelBtn.removeEventListener("click", onCancel);
+      input.removeEventListener("keydown", onKeyDown);
+    }
+
+    // allow Enter to save and Escape to cancel
+    const onKeyDown = (ev) => {
+      if (ev.key === "Enter") {
+        onSave(ev);
+      } else if (ev.key === "Escape") {
+        onCancel(ev);
+      }
+    };
+
+    saveBtn.addEventListener("click", onSave);
+    cancelBtn.addEventListener("click", onCancel);
+    input.addEventListener("keydown", onKeyDown);
+  });
+}
+
 // ✅ Load tasks
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("tasks-go-here");
@@ -33,27 +218,29 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!user) return;
 
     const tasksRef = collection(db, "tasks");
-    const q = query(tasksRef, where("ownerId", "==", user.uid));
+    // Only load active (not completed) tasks for the home view
+    const q = query(
+      tasksRef,
+      where("ownerId", "==", user.uid),
+      where("isCompleted", "==", false)
+    );
 
     const snap = await getDocs(q);
     const tasks = [];
 
-    snap.forEach((doc) => {
-      const data = doc.data();
+    snap.forEach((docSnap) => {
+      const data = docSnap.data();
       let due = null;
 
-      // ✅ Firestore Timestamp
       if (data.dueDate?.toDate) {
         due = data.dueDate.toDate();
-      }
-      // ✅ String "2025-11-25"
-      else if (typeof data.dueDate === "string") {
+      } else if (typeof data.dueDate === "string") {
         const parsed = new Date(data.dueDate);
         if (!isNaN(parsed)) due = parsed;
       }
 
       tasks.push({
-        id: doc.id,
+        id: docSnap.id,
         ...data,
         due,
       });
@@ -69,17 +256,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // ✅ Only top 5
     const top5 = tasks.slice(0, 5);
 
-<<<<<<< HEAD
-    // ✅ Render UI
-  top5.forEach((task) => {
-  const card = template.cloneNode(true);
+    container.innerHTML = ""; // reset list
 
-  card.querySelector(".event-title").textContent = task.title;
-  card.querySelector(".event-desc").textContent = task.description || "";
-  card.querySelector(".event-date").textContent = task.due
-    ? task.due.toISOString().split("T")[0]
-    : "No due date";
-=======
     // ✅ Render
     top5.forEach((task) => {
       const card = template.cloneNode(true);
@@ -91,55 +269,40 @@ document.addEventListener("DOMContentLoaded", () => {
         : "";
 
       // Completed state
+      const checkbox = card.querySelector("input[type='checkbox']");
       if (task.isCompleted) {
         card.querySelector(".evt-title").classList.add("is-done");
-        card.querySelector("input[type='checkbox']").checked = true;
+        checkbox.checked = true;
       }
->>>>>>> 87818b64f097eaf6da66bec46532df2dd81b2208
 
-  // ✅ Find the delete button inside the template
-  const deleteBtn = card.querySelector(".delete-btn");
+      // ✅ Inject ID into buttons
+      card.querySelector(".evt-edit").dataset.edit = task.id;
+      card.querySelector(".evt-delete").dataset.delete = task.id;
 
-  // ✅ Attach click handler for deletion
-  deleteBtn.addEventListener("click", async () => {
-    const confirmDelete = confirm("Are you sure you want to delete this task?");
-    if (!confirmDelete) return;
-
-    try {
-      await deleteDoc(doc(db, "tasks", task.id));
-      deleteBtn.closest(".event-card").remove();
-    } catch (err) {
-      console.error("Failed to delete task:", err);
-      alert("Failed to delete task.");
-    }
-  });
-      const completeBtn = card.querySelector(".complete-btn");
-      completeBtn.addEventListener("click", async () => {
-        const confirmComplete = confirm("Mark this task as completed?");
-        if (!confirmComplete) return;
-
-        try {
-          await setDoc(doc(db, "completedTasks", task.id), {
-            ...task,
-            completedAt: new Date().toISOString(),
-            dueDate: task.due ? task.due.toISOString() : null,
-          });
-
-          await deleteDoc(doc(db, "tasks", task.id));
-          card.remove();
-
-          // Short delay to ensure Firestore completes
-          setTimeout(() => {
-            window.location.href = "complete.html";
-          }, 100); // 100ms delay is enough
-        } catch (err) {
-          console.error("Failed to mark task as completed:", err);
-          alert("Failed to mark task as completed.");
-        }
-      });
-
-      // Append card to container
       container.appendChild(card);
     });
+
+    attachHomeListeners();
   });
 });
+
+/* -------------------------
+   ✅ Add Edit / Delete Listeners
+-------------------------- */
+function attachHomeListeners() {
+  // ✅ Edit
+  document.querySelectorAll("[data-edit]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.edit;
+      window.location.href = `add-event.html?id=${id}`;
+    });
+  });
+
+  // ✅ Delete
+  document.querySelectorAll("[data-delete]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.delete;
+      await deleteDoc(doc(db, "tasks", id));
+    });
+  });
+}

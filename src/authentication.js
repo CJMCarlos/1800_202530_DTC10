@@ -53,6 +53,12 @@ export async function loginUser(email, password) {
 //   const user = await signupUser("Alice", "alice@email.com", "secret");
 // -------------------------------------------------------------
 export async function signupUser(name, email, password) {
+  const MAX_NAME_LENGTH = 13;
+  if (typeof name === "string" && name.trim().length > MAX_NAME_LENGTH) {
+    throw new Error(
+      `Display name must be ${MAX_NAME_LENGTH} characters or fewer.`
+    );
+  }
   const userCredential = await createUserWithEmailAndPassword(
     auth,
     email,
@@ -124,6 +130,35 @@ export function checkAuthState() {
 // Useful for showing user info or redirecting after login/logout.
 export function onAuthReady(callback) {
   return onAuthStateChanged(auth, callback);
+}
+
+// -------------------------------------------------------------
+// updateDisplayName(name)
+// -------------------------------------------------------------
+// Updates the signed-in user's display name in Firebase Auth
+// and updates the users document in Firestore (merge).
+// Returns the updated user object.
+export async function updateDisplayName(name) {
+  const MAX_NAME_LENGTH = 13;
+  if (typeof name === "string" && name.trim().length > MAX_NAME_LENGTH) {
+    throw new Error(
+      `Display name must be ${MAX_NAME_LENGTH} characters or fewer.`
+    );
+  }
+  if (!auth.currentUser) throw new Error("No signed-in user");
+  await updateProfile(auth.currentUser, { displayName: name });
+
+  try {
+    await setDoc(
+      doc(db, "users", auth.currentUser.uid),
+      { name: name },
+      { merge: true }
+    );
+  } catch (err) {
+    console.warn("Failed to update Firestore user doc:", err);
+  }
+
+  return auth.currentUser;
 }
 
 // -------------------------------------------------------------
