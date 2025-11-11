@@ -107,7 +107,6 @@ body {
   display: flex;
   flex-direction: column;
   height: calc(100vh - 160px);
-  /* ↑ 因為你 navbar + footer 加埋大約佔 160px */
   overflow: hidden;
 }
 

@@ -21,7 +21,7 @@ onAuthStateChanged(auth, (user) => {
 
   const tasksRef = collection(db, "tasks");
 
-  // 撈 Completed + 用最新完成時間排序
+  //
   const q = query(
     tasksRef,
     where("ownerId", "==", user.uid),
