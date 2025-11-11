@@ -1,0 +1,135 @@
+/* -------------------------------
+   Page Layout
+--------------------------------*/
+.page-container {
+  padding: 0 24px;
+  margin-top: 20px;
+  margin-bottom: 90px; /* keep footer space */
+  font-family: "Inter", sans-serif;
+  color: #2f2f2f;
+}
+
+/* Title */
+.completed-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 600;
+  color: #2f2f2f;
+  margin: 22px 0 10px 0;
+}
+
+.completed-sub {
+  text-align: center;
+  font-size: 14px;
+  color: #7c7c7c;
+  margin-bottom: 22px;
+}
+
+/* Empty state */
+.empty {
+  text-align: center;
+  color: #6d6d6d;
+  padding: 60px 24px;
+  font-size: 15px;
+}
+
+.empty a {
+  color: #3f3f3f;
+  text-decoration: underline;
+}
+
+/* -------------------------------
+   Completed Task Card
+--------------------------------*/
+.completed-item {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #ecece7;
+  border-radius: 18px;
+  padding: 18px 20px 60px; /* bottom action space */
+  margin-bottom: 14px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.06);
+  transition: 0.18s ease;
+}
+
+.completed-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 5px 14px rgba(0, 0, 0, 0.1);
+}
+
+/* Title (completed = line-through) */
+.completed-title-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #9ea2a0;
+  text-decoration: line-through;
+  margin: 0 0 4px;
+}
+
+.completed-date {
+  font-size: 14px;
+  color: #8a8a8a;
+  font-weight: 500;
+}
+
+.completed-desc {
+  font-size: 14px;
+  color: #6d6d6d;
+  margin: 6px 0 0;
+  line-height: 1.45;
+}
+
+/* -------------------------------
+   Action buttons (Minimal text buttons)
+--------------------------------*/
+.completed-actions {
+  position: absolute;
+  right: 16px;
+  bottom: 12px;
+  display: flex;
+  gap: 12px;
+}
+
+.btn-text {
+  border: none;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #3f3f3f;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.btn-text:hover {
+  background: #eef2f7;
+}
+
+.btn-restore {
+  border-color: #c7ccc5;
+  background: #f6f7f5;
+}
+
+.btn-restore:hover {
+  background: #e7e9e5;
+}
+
+.btn-delete {
+  color: #b91c1c;
+  border-color: #f3d6d6;
+  background: #fff6f6;
+}
+
+.btn-delete:hover {
+  background: #ffeeee;
+}
+
+/* Mobile action bar (auto adjust) */
+@media (max-width: 480px) {
+  .completed-actions {
+    left: 16px;
+    right: 16px;
+    justify-content: flex-end;
+  }
+}

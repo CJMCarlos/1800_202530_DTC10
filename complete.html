@@ -1,68 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Notification</title>
-    <meta name="comp1800 template" content="My 1800 App" />
-
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
+    <title>Completed | TimeMate</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Other libraries go here -->
-    <script type="module" src="./src/app.js"></script>
-    <!-- Link to styles of your own -->
+    <!-- Global Scripts -->
+    <script type="module" src="/src/app.js"></script>
     <script type="module" src="./src/components/site-navbar.js"></script>
     <script type="module" src="./src/components/site-footer.js"></script>
-    <!--Font-->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-      rel="stylesheet"
-    />
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="./styles/style.css" />
+
+    <!-- Completed Page Styles -->
+    <link rel="stylesheet" href="./styles/complete.css" />
   </head>
+
   <body class="body-bg">
-    <!-- Navbar -->
     <site-navbar></site-navbar>
 
-    <!--Main-->
-    <div
-      id="event1"
-      class="mt-2"
-      style="
-        border: 2px solid black;
-        padding: 10px;
-        border-radius: 8px;
-        cursor: pointer;
-      "
-    >
-      <h4>Event 1</h4>
-      <p>
-        COMP 1800 Project 1 <br />
-        Dropbox(Lab05) - Clickable Wireframe - Start coding <br />
-        due on Friday, October 10, 2025
-      </p>
-    </div>
+    <main class="page-container">
+      <header class="header-wrap">
+        <div>
+          <h3 class="title">Completed</h3>
+          <p class="subtle">Tasks you've finished</p>
+        </div>
 
-    <div
-      id="event2"
-      class="mt-2"
-      style="
-        border: 2px solid black;
-        padding: 10px;
-        border-radius: 8px;
-        cursor: pointer;
-      "
-    >
-      <h4>Event 2</h4>
-      <p>
-        COMP 1800 Project 1 <br />
-        Dropbox(Lab05) - Clickable Wireframe - Start coding <br />
-        due on Friday, October 10, 2025
-      </p>
-    </div>
+        <a class="back-link" href="./event.html">Back to My Tasks</a>
+      </header>
 
-    <!-- Footer -->
+      <section id="completedList"></section>
+
+      <div id="emptyState" class="empty" hidden>
+        <h4>No completed tasks</h4>
+        <p>When you finish a task, it will appear here.</p>
+        <a class="back-link" href="./event.html">View active tasks</a>
+      </div>
+    </main>
+
     <site-footer></site-footer>
+
+    <script type="module" src="./src/complete.js"></script>
   </body>
 </html>
