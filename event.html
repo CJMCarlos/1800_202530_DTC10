@@ -1,163 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Events | TimeMate</title>
+    <title>My Events | TimeMate</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Custom CSS + Fonts -->
     <script type="module" src="/src/app.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Components -->
     <script type="module" src="./src/components/site-navbar.js"></script>
     <script type="module" src="./src/components/site-footer.js"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/style.css" />
   </head>
 
   <body class="body-bg">
     <site-navbar></site-navbar>
 
-    <div class="container py-5" style="max-width: 480px">
-      <h3 class="text-center mb-4">My Events</h3>
-
-      <div id="eventList" class="p-3 bg-light rounded shadow-sm border">
-  <div class="container-fluid bg-light text-dark p-5">
-      <div id="events-go-here" class="row">
-          </div>
-  </div>
-
-      <div class="d-flex justify-content-end mt-4">
-        <button id="addEventBtn" class="btn btn-success px-4">
-          + Add Task
-        </button>
+    <!-- WRAPPER-->
+    <div class="page-container">
+      <div class="event-header">
+        <h3>My Events</h3>
+        <button class="add-btn" id="addEventBtn">+ Add</button>
       </div>
-    </div>~
 
-  <template id="taskCardTemplate">
-      <div class="col">
-          <div class="card">
-              <div class="card-body">
-                  <h5 class="card-title"></h5>
-                  <p class="card-text"></p>
-                  <p>Length: <span class="card-length"></span> km</p>
-              </div>
-          </div>
-      </div>
-  </template>
-
-
+      <div id="eventList"></div>
+    </div>
 
     <site-footer></site-footer>
-    <script type="module">
-      import { listenToUserTasks } from "./src/tasksClient.js";
-      import { onAuthReady } from "./src/authentication.js";
 
-      document.addEventListener("DOMContentLoaded", () => {
-  const addEventBtn = document.getElementById("addEventBtn");
-  const eventList = document.getElementById("eventList");
-  // Render tasks inside this inner container so we don't overwrite the Add button
-  const eventsContainer = document.getElementById("events-go-here");
-
-        addEventBtn.addEventListener("click", () => {
-          window.location.href = "add-event.html";
-        });
-
-        // Start listening for tasks when user is authenticated
-        onAuthReady((user) => {
-          if (!user) {
-            if (eventsContainer) {
-              eventsContainer.innerHTML =
-                '<p class="text-muted m-0">Please sign in to view your tasks</p>';
-            }
-            return;
-          }
-
-          // Listen for tasks in real-time
-          listenToUserTasks((tasks) => {
-            if (!eventsContainer) return;
-
-            if (tasks.length === 0) {
-              eventsContainer.innerHTML =
-                '<p class="text-muted text-center m-0">No tasks yet</p>';
-              return;
-            }
-
-            // Render tasks
-            const tasksHtml = tasks
-              .map(
-                (task) => `
-              <div class="task-item mb-3 p-3 border rounded bg-white">
-                <div class="d-flex align-items-center justify-content-between">
-                  <h5 class="mb-1">${task.title}</h5>
-                  <small class="text-muted">${
-                    task.dueDate
-                      ? new Date(
-                          task.dueDate.seconds * 1000
-                        ).toLocaleDateString()
-                      : "No due date"
-                  }</small>
-                </div>
-                ${
-                  task.description
-                    ? `<p class="mb-0 text-muted">${task.description}</p>`
-                    : ""
-                }
-          <div class="text-end">
-              <button
-    class="btn btn-sm btn-outline-primary edit-btn me-2"
-    data-id="${task.id}"
-  >
-    Edit
-  </button>
-          <button
-            class="btn btn-sm btn-outline-danger delete-btn"
-            data-id="${task.id}"
-          >
-            Delete
-          </button>
-        </div>
-              </div>
-            `
-              )
-              .join("");
-
-            eventsContainer.innerHTML = tasksHtml;
-
-            //
-            eventsContainer.querySelectorAll(".delete-btn").forEach((btn) => {
-              btn.addEventListener("click", async () => {
-                const taskId = btn.dataset.id;
-                const confirmDelete = confirm(
-                  "Are you sure you want to delete this task?"
-                );
-                if (!confirmDelete) return;
-
-                try {
-                  const { deleteTaskForCurrentUser } = await import(
-                    "./src/tasksClient.js"
-                  );
-                  await deleteTaskForCurrentUser(taskId);
-                  alert("Task deleted successfully!");
-                  //
-                } catch (err) {
-                  console.error("Failed to delete task:", err);
-                  alert("Failed to delete task. Please try again.");
-                }
-              });
-            });
-            eventList.querySelectorAll(".edit-btn").forEach((btn) => {
-              btn.addEventListener("click", () => {
-                const taskId = btn.dataset.id;
-                // link to add-event.html
-                window.location.href = `add-event.html?id=${taskId}`;
-              });
-            });
-          });
-        });
-      });
-    </script>
+    <script type="module" src="./src/event.js"></script>
   </body>
 </html>
