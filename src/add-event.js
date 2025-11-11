@@ -1,5 +1,5 @@
 import { db, auth } from "./firebaseConfig.js";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("addEventForm");
@@ -14,7 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
       ownerId: auth.currentUser.uid,
       title: titleInput.value.trim(),
       description: descInput.value.trim(),
-      dueDate: dateInput.value, // store duedate as string
+      dueDate: dateInput.value,
+      isCompleted: false,
+      createdAt: serverTimestamp(),
     };
 
     try {
