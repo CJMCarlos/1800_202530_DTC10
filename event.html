@@ -1,58 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Events | TimeMate</title>
+    <title>My Events | TimeMate</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Custom CSS + Fonts -->
     <script type="module" src="/src/app.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Components -->
     <script type="module" src="./src/components/site-navbar.js"></script>
     <script type="module" src="./src/components/site-footer.js"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/style.css" />
   </head>
 
   <body class="body-bg">
     <site-navbar></site-navbar>
 
-    <div class="container py-5" style="max-width: 480px">
-      <h3 class="text-center mb-4">My Events</h3>
-
-      <div id="eventList" class="p-3 bg-light rounded shadow-sm border">
-  <div class="container-fluid bg-light text-dark p-5">
-      <div id="events-go-here" class="row">
-          </div>
-  </div>
-
-      <div class="d-flex justify-content-end mt-4">
-        <button id="addEventBtn" class="btn btn-success px-4">
-          + Add Task
-        </button>
+    <!-- WRAPPER-->
+    <div class="page-container">
+      <div class="event-header">
+        <h3>My Events</h3>
+        <button class="add-btn" id="addEventBtn">+ Add</button>
       </div>
+
+      <div id="eventList"></div>
     </div>
 
-  <template id="taskCardTemplate">
-      <div class="col">
-          <div class="card">
-              <div class="card-body">
-                  <h5 class="card-title"></h5>
-                  <p class="card-text"></p>
-                  <p>Length: <span class="card-length"></span> km</p>
-              </div>
-          </div>
-      </div>
-  </template>
-
-
-
     <site-footer></site-footer>
+
     <script type="module" src="./src/event.js"></script>
   </body>
 </html>

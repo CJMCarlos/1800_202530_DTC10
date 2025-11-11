@@ -5,54 +5,54 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Custom CSS + Fonts -->
+    <!-- Scripts -->
     <script type="module" src="/src/app.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Components -->
+    <script type="module" src="./src/add-event.js"></script>
     <script type="module" src="./src/components/site-navbar.js"></script>
     <script type="module" src="./src/components/site-footer.js"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/styles/style.css" />
   </head>
 
   <body class="body-bg">
-    <div class="container py-5" style="max-width: 480px">
-      <h3 class="text-center mb-4">Add New Task</h3>
+    <site-navbar></site-navbar>
 
-      <form id="addEventForm" class="bg-light p-4 rounded shadow-sm">
-        <div class="mb-3">
-          <label for="eventName" class="form-label">Task Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="eventName"
-            placeholder="e.g. Dinner with team"
-            required
-          />
-        </div>
+    <div class="page-container">
+      <h2 class="page-title">Add New Task</h2>
 
-        <div class="mb-3">
-          <label for="eventDescription" class="form-label">Description</label>
-          <textarea
-            class="form-control"
-            id="eventDescription"
-            rows="4"
-            placeholder="Add details about your event (press Enter for new line)..."
-          ></textarea>
-        </div>
+      <form id="addEventForm" class="task-form">
+        <label class="form-label">Task Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="eventName"
+          placeholder="e.g. Dinner with team"
+          required
+        />
 
-        <div class="mb-3">
-          <label for="eventDate" class="form-label">Task Date</label>
-          <input type="date" class="form-control" id="eventDate" required />
-        </div>
+        <label class="form-label">Description</label>
+        <textarea
+          class="form-control"
+          id="eventDescription"
+          rows="4"
+          placeholder="Add details about your event..."
+        ></textarea>
 
-        <button type="submit" class="btn btn-primary w-100">Add Task</button>
+        <label class="form-label">Task Date</label>
+        <input type="date" class="form-control" id="eventDate" required />
+
+        <button type="submit" class="submit-btn">Add Task</button>
       </form>
     </div>
 
     <site-footer></site-footer>
-
-    <script type="module" src="./src/add-event.js"></script>
   </body>
 </html>
