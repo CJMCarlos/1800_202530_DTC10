@@ -72,9 +72,9 @@ if (editBtn) {
     input.value = ""; // empty, placeholder shows original username in grey
     input.placeholder = current.trim();
     input.className = "editor-input";
-  // enforce max length of 15 characters on the client
-  input.maxLength = 15;
-  input.setAttribute("maxlength", "15");
+    // enforce max length of 13 characters on the client
+    input.maxLength = 13;
+    input.setAttribute("maxlength", "13");
     // style to appear as transparent text with underline
     input.style.width = "100%";
     input.style.boxSizing = "border-box";
