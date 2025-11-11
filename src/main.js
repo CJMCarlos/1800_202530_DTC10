@@ -72,6 +72,9 @@ if (editBtn) {
     input.value = ""; // empty, placeholder shows original username in grey
     input.placeholder = current.trim();
     input.className = "editor-input";
+  // enforce max length of 15 characters on the client
+  input.maxLength = 15;
+  input.setAttribute("maxlength", "15");
     // style to appear as transparent text with underline
     input.style.width = "100%";
     input.style.boxSizing = "border-box";
@@ -128,6 +131,12 @@ if (editBtn) {
     const onSave = async (ev) => {
       ev.preventDefault();
       const newName = input.value.trim();
+      // client-side validation: enforce length <= 13
+      if (newName.length > 13) {
+        alert("Username must be 13 characters or fewer.");
+        input.focus();
+        return;
+      }
       if (!newName) {
         alert("Username cannot be empty.");
         input.focus();

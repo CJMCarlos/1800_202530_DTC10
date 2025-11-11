@@ -34,12 +34,35 @@
 
 .greet-combined {
   display: flex;
+  flex-wrap: nowrap; /* keep greeting on one line */
   font-size: 28px;
   font-weight: 700;
   color: #51624f;
   margin: 0 0 10px;
   align-items: center;
   gap: 8px;
+  /* allow dropdown/actions to escape the line instead of being clipped */
+  overflow: visible;
+}
+/* Ensure the displayed name doesn't push the edit button out */
+.greet-combined #name-goes-here {
+  flex: 1 1 auto;
+  min-width: 0; /* allow the name to shrink inside flex */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Editor wrapper should also be shrinkable so it doesn't force overflow */
+.greet-combined .inline-editor {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Keep edit button fixed-size so it never gets pushed out */
+.greet-combined .edit-btn {
+  flex: 0 0 auto;
+  margin-left: 8px;
 }
 
 .greet-combined #greet-time {
@@ -272,6 +295,8 @@
 .inline-editor {
   /* stacked: input on top, actions below */
   min-width: 0; /* allow the editor to shrink inside flex container */
+  flex-shrink: 1; /* allow shrinking on mobile screens */
+  position: relative; /* anchor absolute actions */
 }
 .inline-editor .editor-input {
   font: inherit;
@@ -290,5 +315,9 @@
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  margin-top: 4px;
+  /* position absolutely so actions don't push layout */
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 50; /* ensure actions are visible above nearby elements */
 }
