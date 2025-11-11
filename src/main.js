@@ -1,68 +1,85 @@
-import { onAuthReady } from "./authentication.js";
-import { collection, getDocs, addDoc, serverTimestamp } from "firebase/firestore";
+import { db, auth } from "./firebaseConfig.js";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
-function showDashboard() {
-  // Wait for Firebase to determine the current authentication state.
-    onAuthReady((user) => {
-    if (!user) {
-      // If no user is signed in → redirect back to login page.
-    location.href = "index.html";
-    return;
-    }
-
-    // If a user is logged in:
-    const name = user.displayName || user.email;
-
-    const nameElement = document.getElementById("name-goes-here");
-    if (nameElement) {
-    nameElement.textContent = `${name}!`;
-    }
+onAuthStateChanged(auth, (user) => {
+  if (!user) return;
+  document.getElementById("name-goes-here").textContent =
+    user.displayName || user.email.split("@")[0];
 });
-}
 
-showDashboard();
+// Greeting Text
+const greetText = ["Good Morning", "Good Afternoon", "Good Evening"];
+const hour = new Date().getHours();
+let greet = greetText[2];
+if (hour < 12) greet = greetText[0];
+else if (hour < 18) greet = greetText[1];
+document.getElementById("greet-time").textContent = greet;
 
-async function seedTasks() {
+// Today date
+document.getElementById("today-date").textContent =
+  new Date().toLocaleDateString("en-CA", {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+  });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("tasks-go-here");
+  const template = document.getElementById("TaskCardTemplate").content;
+
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) return;
+
     const tasksRef = collection(db, "tasks");
-    const querySnapshot = await getDocs(tasksRef);
+    const q = query(tasksRef, where("ownerId", "==", user.uid));
 
-  // Check if the collection is empty
-    if (querySnapshot.empty) {
-    console.log("Task collection is empty. Seeding data...");
-    addTaskData();
-    } else {
-    console.log("Task collection already contains data. Skipping seed.");
-}
-}
+    const snap = await getDocs(q);
+    let tasks = [];
 
-// Call the seeding function when the main.html page loads.
-seedTasks();
+    snap.forEach((doc) => {
+      const data = doc.data();
+      let due = null;
 
-async function displayCardsDynamically() {
-    let cardTemplate = document.getElementById("TaskCardTemplate");
-    const tasksCollectionRef = collection(db, "tasks");
+      // ✅ Firestore Timestamp
+      if (data.dueDate?.toDate) {
+        due = data.dueDate.toDate();
+      }
 
-    try {
-    const querySnapshot = await getDocs(tasksCollectionRef);
-    querySnapshot.forEach(doc => {
-      // Clone the template
-    let newcard = cardTemplate.content.cloneNode(true);
-      const task = doc.data(); // Get Task data once
+      // ✅ string "2025-11-25"
+      else if (typeof data.dueDate === "string") {
+        const parsed = new Date(data.dueDate);
+        if (!isNaN(parsed)) due = parsed;
+      }
 
-      // Populate the card with Task data
-    newcard.querySelector('.card-title').textContent = task.name;
-    newcard.querySelector('.card-text').textContent = task.details || `Located in ${task.city}.`;
-    newcard.querySelector('.card-length').textContent = task.length;
-
-      // 👇 ADD THIS LINE TO SET THE IMAGE SOURCE
-    newcard.querySelector('.card-image').src = `./images/${task.code}.jpg`;
-      // Add the link with the document ID
-    newcard.querySelector(".read-more").href = `eachTask.html?docID=${doc.id}`;
-
-      // Attach the new card to the container
-    document.getElementById("tasks-go-here").appendChild(newcard);
+      tasks.push({
+        id: doc.id,
+        ...data,
+        due,
+      });
     });
-} catch (error) {
-    console.error("Error getting documents: ", error);
-}
-}
+
+    // ✅ sort by date
+    tasks.sort((a, b) => {
+      if (!a.due) return 1;
+      if (!b.due) return -1;
+      return a.due - b.due;
+    });
+
+    // ✅ top 5 tasks
+    const top5 = tasks.slice(0, 5);
+
+    // ✅ Render UI
+    top5.forEach((task) => {
+      const card = template.cloneNode(true);
+
+      card.querySelector(".event-title").textContent = task.title;
+      card.querySelector(".event-desc").textContent = task.description || "";
+      card.querySelector(".event-date").textContent = task.due
+        ? task.due.toISOString().split("T")[0]
+        : "No due date";
+
+      container.appendChild(card);
+    });
+  });
+});
