@@ -34,7 +34,7 @@ class SiteFooter extends HTMLElement {
     </a>
 
     <!-- Profile -->
-    <a class="nav-btn" href="login.html">
+    <a class="nav-btn" href="profile.html">
       <svg viewBox="0 0 24 24">
         <circle cx="12" cy="8" r="4"/>
         <path d="M6 20c0-4 4-6 6-6s6 2 6 6"/>

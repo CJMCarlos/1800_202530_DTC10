@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Profile | TimeMate</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Components -->
+    <script type="module" src="./src/components/site-navbar.js"></script>
+    <script type="module" src="./src/components/site-footer.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/profile.css" />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="body-bg">
+    <site-navbar></site-navbar>
+
+    <main class="profile-container">
+      <!-- Profile Picture Section -->
+      <div class="profile-picture-section">
+        <div class="profile-picture-wrapper">
+          <img
+            id="profilePictureDisplay"
+            src=""
+            alt="Profile Picture"
+            class="profile-picture"
+          />
+          <input
+            type="file"
+            id="profilePictureInput"
+            accept="image/*"
+            style="display: none"
+          />
+          <button
+            id="editProfilePicBtn"
+            class="edit-profile-pic-btn"
+            aria-label="Edit profile picture"
+          >
+            <img src="./images/editprofile.svg" alt="Edit" class="edit-icon" />
+          </button>
+        </div>
+      </div>
+
+      <!-- Edit Profile Section -->
+      <div class="edit-profile-section">
+        <div class="edit-profile-header">
+          <h2>Edit Profile</h2>
+          <button id="saveProfileBtn" class="save-btn">Save</button>
+        </div>
+
+        <form id="profileForm" class="profile-form">
+          <!-- Username Input -->
+          <div class="form-group">
+            <label for="usernameInput">Username</label>
+            <input
+              type="text"
+              id="usernameInput"
+              placeholder="Enter your username"
+              maxlength="13"
+              autocomplete="off"
+              required
+            />
+            <small id="usernameError" class="error-message"></small>
+          </div>
+
+          <!-- Password Input -->
+          <div class="form-group">
+            <label for="passwordInput">New Password (optional)</label>
+            <input
+              type="text"
+              id="passwordInput"
+              placeholder="Leave blank to keep current password"
+              autocomplete="off"
+              class="password-field"
+            />
+            <small id="passwordError" class="error-message"></small>
+          </div>
+        </form>
+      </div>
+
+      <!-- Logout Button -->
+      <div class="logout-section">
+        <button id="logoutBtn" class="logout-btn">Log out</button>
+      </div>
+    </main>
+
+    <site-footer></site-footer>
+
+    <script type="module" src="./src/profile.js"></script>
+  </body>
+</html>

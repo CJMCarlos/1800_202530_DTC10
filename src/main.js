@@ -32,6 +32,8 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+// Note: Edit username feature has been moved to profile.html
+
 // ✅ Load tasks
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("tasks-go-here");
