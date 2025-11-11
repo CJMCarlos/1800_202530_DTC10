@@ -5,6 +5,8 @@ import {
   where,
   onSnapshot,
   orderBy,
+  doc, 
+  deleteDoc
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -80,6 +82,5 @@ function attachListeners() {
 }
 
 async function deleteTask(id) {
-  const { doc, deleteDoc } = await import("firebase/firestore");
   await deleteDoc(doc(db, "completedTasks", id)); // delete from completedTasks
 }

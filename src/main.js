@@ -35,15 +35,24 @@ onAuthStateChanged(auth, (user) => {
 // Note: Edit username feature has been moved to profile.html
 
 // ✅ Load tasks
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => { 
   const container = document.getElementById("tasks-go-here");
   const template = document.getElementById("HomeEventPreview").content;
 
   onAuthStateChanged(auth, async (user) => {
     if (!user) return;
 
+    // Display username
+    const nameEl = document.getElementById("name-goes-here");
+    if (nameEl) {
+      nameEl.textContent = user.displayName || user.email.split("@")[0];
+    }
+
+    // Load tasks
+    const container = document.getElementById("tasks-go-here");
+    const template = document.getElementById("HomeEventPreview").content;
+
     const tasksRef = collection(db, "tasks");
-    // Only load active (not completed) tasks for the home view
     const q = query(
       tasksRef,
       where("ownerId", "==", user.uid),
