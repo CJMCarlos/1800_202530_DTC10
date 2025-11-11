@@ -1,68 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Home</title>
+    <title>Home | TimeMate</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- App JS -->
-    <script type="module" src="/src/app.js"></script>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
-      rel="stylesheet"
-    />
 
     <!-- Components -->
     <script type="module" src="./src/components/site-navbar.js"></script>
     <script type="module" src="./src/components/site-footer.js"></script>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/styles/home.css" />
+    <!-- Styles -->
+    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/home.css" />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body class="body-bg">
-    <!-- NAVBAR -->
     <site-navbar></site-navbar>
 
-    <div class="home-container">
+    <main class="home-container">
       <!-- Greeting Section -->
       <div class="greet-card">
-        <h1 class="greet-combined">
-          <span id="greet-time"></span>, <span id="name-goes-here"></span>
-        </h1>
-
+        <h2 class="greet-combined">
+          <span id="greet-time">Good Evening</span>,
+          <span id="name-goes-here">User</span>
+        </h2>
         <p class="greet-date" id="today-date"></p>
       </div>
 
       <!-- Upcoming Events -->
       <div class="section-header">
-        <h2 class="px-2">Upcoming Events</h2>
-        <a class="view-all-btn" href="event.html">View All</a>
+        <h2>Upcoming Events</h2>
+        <a href="event.html" class="view-all-btn">View All</a>
       </div>
 
-      <!-- TEMPLATE -->
-      <template id="TaskCardTemplate">
-        <div class="event-card">
-          <div>
-            <h3 class="event-title"></h3>
-            <p class="event-desc"></p>
-          </div>
-          <p class="event-date"></p>
-        </div>
-      </template>
-
-      <!-- lists -->
+      <!-- Event preview list -->
       <div id="tasks-go-here" class="events-list"></div>
-    </div>
+    </main>
 
-    <!-- FOOTER -->
     <site-footer></site-footer>
 
-    <!-- Main Logic -->
+    <!-- Template -->
+    <template id="HomeEventPreview">
+      <div class="evt-card">
+        <div class="evt-content">
+          <div class="evt-top">
+            <div class="evt-left">
+              <label class="evt-check">
+                <input type="checkbox" disabled />
+                <svg class="check-icon" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5" stroke-width="3" fill="none" />
+                </svg>
+              </label>
+
+              <div class="evt-info">
+                <div class="evt-row">
+                  <h5 class="evt-title"></h5>
+                  <small class="evt-date"></small>
+                </div>
+
+                <p class="evt-desc"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ✅ right-bottom absolute，但永遠唔會出界 -->
+          <div class="evt-actions">
+            <button class="evt-btn evt-edit">Edit</button>
+            <button class="evt-btn evt-btn-danger evt-delete">Delete</button>
+          </div>
+        </div>
+      </div>
+    </template>
+
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>

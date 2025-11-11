@@ -5,32 +5,38 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- Scripts -->
     <script type="module" src="/src/app.js"></script>
     <script type="module" src="./src/components/site-navbar.js"></script>
     <script type="module" src="./src/components/site-footer.js"></script>
 
+    <!-- Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/styles/style.css" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/event.css" />
   </head>
 
   <body class="body-bg">
     <site-navbar></site-navbar>
 
-    <!-- WRAPPER-->
-    <div class="page-container">
+    <main class="page-container">
+      <!-- Header -->
       <div class="event-header">
-        <h3>My Events</h3>
+        <h3 class="page-title">My Events</h3>
         <button class="add-btn" id="addEventBtn">+ Add</button>
       </div>
 
+      <!-- Task List Container -->
       <div id="eventList"></div>
-    </div>
+    </main>
 
     <site-footer></site-footer>
 
-    <script type="module" src="./src/event.js"></script>
+    <script type="module" src="/src/event.js"></script>
   </body>
 </html>
