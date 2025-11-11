@@ -2,9 +2,11 @@
    PAGE LAYOUT
 ================================ */
 .home-container {
+  width: 100%;
   max-width: 820px;
   margin: 40px auto 120px;
-  padding: 0 22px;
+  padding: 0 32px;
+  box-sizing: border-box;
   font-family: "Inter", sans-serif;
   color: #2f2f2f;
 }
@@ -14,6 +16,8 @@
 ================================ */
 .greet-card {
   width: 100%;
+  max-width: 820px;
+  margin: 0 auto 20px;
   background: linear-gradient(
     to right,
     #ffffff 0%,
@@ -25,7 +29,7 @@
   border-radius: 18px;
   border: 1px solid #eceae6;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-  margin-bottom: 40px;
+  box-sizing: border-box;
 }
 
 .greet-combined {
@@ -38,18 +42,7 @@
 .greet-combined #greet-time {
   font-weight: 400;
   font-size: 28px;
-  color: 51624f;
-}
-
-.greet-title {
-  font-size: 26px;
-  font-weight: 600;
-  margin: 0;
-  color: #2f2f2f;
-}
-
-.greet-title span {
-  color: #5d6f61;
+  color: #51624f;
 }
 
 .greet-date {
@@ -62,8 +55,7 @@
    SECTION HEADER
 ================================ */
 .section-header {
-  margin-top: 8px;
-  margin-bottom: 14px;
+  margin: 0 0 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -77,16 +69,12 @@
 
 .view-all-btn {
   font-size: 13px;
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 8px;
   border: 1px solid #cdd1ca;
   color: #54645a;
   background: #f7f8f6;
   text-decoration: none;
-}
-
-.view-all-btn:hover {
-  background: #e3e6e1;
 }
 
 /* ================================
@@ -101,39 +89,167 @@
 /* ================================
    EVENT CARD
 ================================ */
-.event-card {
-  background: white;
-  padding: 20px 22px;
+.evt-card {
+  position: relative;
+  background: #ffffff;
   border-radius: 18px;
-  border: 1px solid #e8e6e0;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  padding: 18px 20px 65px;
+  border: 1px solid #f1f1ee;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: 0.15s ease;
+
+  box-sizing: border-box; /* ✅ ✅ ✅ 最關鍵一行 */
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+.evt-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* layout */
+.evt-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.evt-left {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+/* checkbox */
+.evt-check {
+  width: 30px;
+  height: 30px;
+  border: 2px solid #cdd3cf;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: 0.15s ease;
+  margin-top: 3px;
+}
+
+.evt-check input {
+  display: none;
+}
+
+.check-icon {
+  width: 20px;
+  height: 20px;
+  stroke: white;
+  stroke-width: 3;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: 0.15s ease;
+}
+
+.evt-check:has(input:checked) {
+  background: #a8b4ad;
+  border-color: #8e9b94;
+}
+
+.evt-check:has(input:checked) .check-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* text */
+.evt-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.evt-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  transition: 0.2s ease;
+  width: 100%;
+  align-items: center;
+
+  flex-wrap: wrap; /* ✅ 窄螢幕最重要修正 */
+  gap: 6px 10px; /* ✅ 美觀 */
 }
 
-.event-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.08);
-}
-
-.event-title {
-  font-size: 18px;
-  margin: 0;
+.evt-title {
+  font-size: 17px;
   font-weight: 600;
+  margin: 0;
+  color: #2f2f2f;
 }
 
-.event-desc {
-  margin-top: 5px;
+.evt-date {
+  font-size: 13px;
+  color: #848484;
+  white-space: nowrap;
+}
+
+/* description */
+.evt-desc {
   font-size: 14px;
-  color: #777;
+  color: #6d6d6d;
+  margin-top: -2px;
 }
 
-.event-date {
-  font-size: 15px;
-  color: #595959;
-  min-width: 100px;
-  text-align: right;
-  margin-top: 3px;
+/* ================================
+   EVENT ACTION BUTTONS
+================================ */
+.evt-actions {
+  display: flex;
+  gap: 10px;
+
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  flex-shrink: 0; /* ✅ 唔會被壓縮 */
+}
+
+.evt-btn {
+  padding: 6px 14px;
+  font-size: 13px;
+  border-radius: 12px;
+  background: #eef0ee;
+  border: 1px solid #d4d6d3;
+  color: #3e3e3e;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.evt-btn:hover {
+  background: #e3e5e3;
+}
+
+.evt-btn-danger {
+  background: #f2f2f2;
+  border-color: #d6d7d5;
+}
+
+.evt-btn-danger:hover {
+  background: #e8e8e8;
+}
+
+/* ================================
+   MOBILE FIX
+================================ */
+@media (max-width: 480px) {
+  .home-container {
+    padding: 0 16px; /* ✅ 防止窄螢幕貼邊 */
+  }
+
+  .evt-card {
+    padding: 16px 16px 70px; /* ✅ 留足夠位畀 edit/delete */
+  }
+
+  .evt-actions {
+    right: 10px;
+    bottom: 10px;
+  }
 }
