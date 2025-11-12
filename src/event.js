@@ -6,6 +6,8 @@ import {
   onSnapshot,
   updateDoc,
   deleteDoc,
+  getDoc,
+  addDoc,
   doc,
   orderBy,
 } from "firebase/firestore";
@@ -26,9 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
       eventList.innerHTML = `<p>Please sign in to view your events</p>`;
       return;
     }
-
+    const completedRef = collection(db, "completedTasks");
     const tasksRef = collection(db, "tasks");
-
     const q = query(
       tasksRef,
       where("ownerId", "==", user.uid),
@@ -58,6 +59,13 @@ document.addEventListener("DOMContentLoaded", () => {
           t.dueDate || "No due date";
         card.querySelector(".evt-desc").textContent = t.description || "";
 
+        // Define checkbox
+        const checkbox = card.querySelector(".complete-toggle");
+        if (t.isCompleted) {
+          card.querySelector(".evt-title").classList.add("is-done");
+          checkbox.checked = true;
+        }
+
         if (done) {
           card.querySelector(".evt-title").classList.add("is-done");
           card.querySelector(".complete-toggle").checked = true;
@@ -68,6 +76,32 @@ document.addEventListener("DOMContentLoaded", () => {
         card.querySelector(".edit-btn").dataset.edit = id;
         card.querySelector(".delete-btn").dataset.delete = id;
 
+        //Checkbox listener
+        checkbox.addEventListener("change", async () => {
+          if (!checkbox.checked) return; // Only act when checked
+
+          try {
+            const taskRef = doc(db, "tasks", id);
+            const snap = await getDoc(taskRef);
+            if (!snap.exists()) return;
+
+            const taskData = snap.data();
+
+            await addDoc(completedRef, {
+              ...taskData,
+              isCompleted: true,
+              completedAt: Date.now(),
+            });
+
+            await deleteDoc(taskRef);
+
+            // Redirect to completed page
+            window.location.href = "complete.html";
+
+          } catch (err) {
+            console.error("Failed to move task to completed:", err);
+          }
+        });
         // Add card to DOM
         eventList.appendChild(card);
       });
@@ -86,11 +120,14 @@ function attachListeners() {
   document.querySelectorAll(".complete-toggle").forEach((box) => {
     box.addEventListener("change", async () => {
       const id = box.dataset.id;
-
+      const isChecked = box.checked;
       await updateDoc(doc(db, "tasks", id), {
-        isCompleted: true,
+        isCompleted: isChecked,
         completedAt: Date.now(),
       });
+      if (isChecked) {
+        window.location.href = "complete.html";
+      }
     });
   });
 
