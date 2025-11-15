@@ -10,6 +10,8 @@ import {
   addDoc,
   doc,
   orderBy,
+  getDoc,
+  addDoc,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -116,9 +118,10 @@ document.addEventListener("DOMContentLoaded", () => {
 ------------------------------ */
 
 function attachListeners() {
-  // Mark complete
+  // Mark complete — copy to `completedTasks` then delete from `tasks`
   document.querySelectorAll(".complete-toggle").forEach((box) => {
-    box.addEventListener("change", async () => {
+    // Use `onchange` to avoid attaching multiple listeners on every snapshot update
+    box.onchange = async () => {
       const id = box.dataset.id;
       const isChecked = box.checked;
       await updateDoc(doc(db, "tasks", id), {
