@@ -10,8 +10,6 @@ import {
   addDoc,
   doc,
   orderBy,
-  getDoc,
-  addDoc,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -115,10 +113,13 @@ document.addEventListener("DOMContentLoaded", () => {
 function attachListeners() {
   document.querySelectorAll(".complete-toggle").forEach((box) => {
     box.addEventListener("change", async () => {
+      const isChecked = box.checked;
+
       await updateDoc(doc(db, "tasks", box.dataset.id), {
-        isCompleted: true,
+        isCompleted: isChecked,
         completedAt: Date.now(),
       });
+
       if (isChecked) {
         window.location.href = "complete.html";
       }
