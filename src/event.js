@@ -6,8 +6,6 @@ import {
   onSnapshot,
   updateDoc,
   deleteDoc,
-  getDoc,
-  addDoc,
   doc,
   orderBy,
 } from "firebase/firestore";
@@ -27,8 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
       eventList.innerHTML = `<p>Please sign in to view your events</p>`;
       return;
     }
-    const completedRef = collection(db, "completedTasks");
+
     const tasksRef = collection(db, "tasks");
+
     const q = query(
       tasksRef,
       where("ownerId", "==", user.uid),
@@ -113,16 +112,10 @@ document.addEventListener("DOMContentLoaded", () => {
 function attachListeners() {
   document.querySelectorAll(".complete-toggle").forEach((box) => {
     box.addEventListener("change", async () => {
-      const isChecked = box.checked;
-
       await updateDoc(doc(db, "tasks", box.dataset.id), {
-        isCompleted: isChecked,
+        isCompleted: true,
         completedAt: Date.now(),
       });
-
-      if (isChecked) {
-        window.location.href = "complete.html";
-      }
     });
   });
 
