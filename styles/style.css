@@ -106,7 +106,7 @@ body {
   height: 26px;
 }
 
-/* ---------- Page container (左右縮內 & footer 預留空間) ---------- */
+/* ---------- Page container ---------- */
 .page-container {
   padding: 0 24px;
   margin-top: 12px;
@@ -122,7 +122,7 @@ body {
   margin: 22px 0 26px 0;
 }
 
-/* ---------- Form (白卡) ---------- */
+/* ---------- Form  ---------- */
 .task-form {
   background: #ffffff;
   padding: 28px 24px;
