@@ -231,6 +231,7 @@
 
 /* description */
 .evt-desc {
+  min-height: 18px;
   font-size: 15px;
   color: #6d6d6d;
   margin-top: 0px;

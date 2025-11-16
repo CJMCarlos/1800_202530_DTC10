@@ -90,10 +90,15 @@ body {
   height: 60px;
   background: #d4d9d2; /* Minimal Calm green */
   border-radius: 20px;
-  box-shadow: 0px 5px 14px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* Hover effect */
+.fab:hover {
+  background: #c6cbc4;
 }
 
 .fab svg {
@@ -184,91 +189,36 @@ body {
   background: #babfb8;
 }
 
-/* ------------------------------------------------------
-   EVENT LIST — MINIMAL CALM STYLE (MATCH WHOLE APP)
--------------------------------------------------------- */
-
-/* Header row */
-.event-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  margin-bottom: 5px;
-}
-
-/* Add Event Button */
-.add-btn {
-  background: #d4d9d2;
-  color: #2f2f2f;
-  font-size: 14px;
-  font-weight: 600;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 12px;
-  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12);
-  cursor: pointer;
-}
-
-.add-btn:hover {
-  background: #c7ccc5;
-}
-
-.add-btn:active {
-  background: #babfb8;
-}
-
-/* Whole list container */
-#eventList {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 0 20px;
-}
-
-/* Event card */
-.event-item {
-  background: #ffffff;
-  border: 1px solid #ecece7;
+/* navbar hover */
+.nav-icon-box {
+  width: 64px;
+  height: 64px;
   border-radius: 18px;
-  padding: 18px 20px;
-  transition: 0.18s ease;
+  background: #f5f5f3;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  transition: 0.25s ease;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 3px;
 }
 
-.event-item:hover {
+/* Hover effect */
+.nav-btn:hover .nav-icon-box {
+  background: #e5e7e2;
+  transform: translateY(-2px);
+}
+
+/* Active tab */
+.nav-btn.active .nav-icon-box {
+  background: #d4d9d2;
+  border: 2px solid #c2c7bf;
   transform: translateY(-3px);
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Title */
-.event-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #2f2f2f;
-  margin: 0;
-}
-
-/* Descption */
-.event-desc {
-  font-size: 14px;
-  color: #6d6d6d;
-  margin: 0;
-  line-height: 1.5; /* ✅ 更舒適 */
-}
-
-/* Date */
-.event-date {
-  font-size: 14px;
-  font-weight: 500;
-  color: #8a8a8a;
-  margin-top: 4px;
-}
-
-.page-container {
-  padding: 0 24px; /* ✅ 左右縮內 */
-  margin-top: 20px;
-  margin-bottom: 90px; /* ✅ 下面預留位置比 Footer */
+/* Make icons smaller inside */
+.nav-icon-box svg {
+  width: 32px;
+  height: 32px;
+  stroke-width: 2.2px;
 }
