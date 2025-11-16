@@ -6,8 +6,12 @@ import {
   onSnapshot,
   updateDoc,
   deleteDoc,
+  getDoc,
+  addDoc,
   doc,
   orderBy,
+  getDoc,
+  addDoc,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -25,9 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
       eventList.innerHTML = `<p>Please sign in to view your events</p>`;
       return;
     }
-
+    const completedRef = collection(db, "completedTasks");
     const tasksRef = collection(db, "tasks");
-
     const q = query(
       tasksRef,
       where("ownerId", "==", user.uid),
@@ -116,6 +119,9 @@ function attachListeners() {
         isCompleted: true,
         completedAt: Date.now(),
       });
+      if (isChecked) {
+        window.location.href = "complete.html";
+      }
     });
   });
 

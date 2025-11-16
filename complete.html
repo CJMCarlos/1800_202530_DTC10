@@ -5,12 +5,15 @@
     <title>Completed | TimeMate</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+
+    <!-- Other libraries go here -->
+    <script type="module" src="./src/app.js"></script>
+    <script type="module" src="./src/complete.js"></script>
+    <!-- Link to styles of your own -->
+
     <!-- Global Scripts -->
-    <script type="module" src="/src/app.js"></script>
     <script type="module" src="./src/components/site-navbar.js"></script>
     <script type="module" src="./src/components/site-footer.js"></script>
-
-    <!-- Global Styles -->
     <link rel="stylesheet" href="./styles/style.css" />
 
     <!-- Completed Page Styles -->
@@ -24,10 +27,7 @@
       <header class="header-wrap">
         <div>
           <h3 class="title">Completed</h3>
-          <p class="subtle">Tasks you've finished</p>
         </div>
-
-        <a class="back-link" href="./event.html">Back to My Tasks</a>
       </header>
 
       <section id="completedList"></section>
@@ -41,6 +41,5 @@
 
     <site-footer></site-footer>
 
-    <script type="module" src="./src/complete.js"></script>
   </body>
 </html>

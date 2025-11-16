@@ -8,7 +8,6 @@ import {
   doc,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import { updateDisplayName } from "./authentication.js";
 
 // ✅ Greeting text
 const greetText = ["Good Morning", "Good Afternoon", "Good Evening"];
@@ -35,15 +34,29 @@ onAuthStateChanged(auth, (user) => {
 // Note: Edit username feature has been moved to profile.html
 
 // ✅ Load tasks
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => { 
   const container = document.getElementById("tasks-go-here");
   const template = document.getElementById("HomeEventPreview").content;
 
   onAuthStateChanged(auth, async (user) => {
     if (!user) return;
 
+    // Display username
+    const nameEl = document.getElementById("name-goes-here");
+    if (nameEl) {
+      nameEl.textContent = user.displayName || user.email.split("@")[0];
+    }
+
+    // Load tasks
+    const container = document.getElementById("tasks-go-here");
+    const template = document.getElementById("HomeEventPreview").content;
+
     const tasksRef = collection(db, "tasks");
-    const q = query(tasksRef, where("ownerId", "==", user.uid));
+    const q = query(
+      tasksRef,
+      where("ownerId", "==", user.uid),
+      where("isCompleted", "==", false)
+    );
 
     const snap = await getDocs(q);
     const tasks = [];

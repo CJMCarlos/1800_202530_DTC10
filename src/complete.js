@@ -4,7 +4,9 @@ import {
   query,
   where,
   onSnapshot,
-  orderBy,
+
+  doc, 
+  deleteDoc
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -19,15 +21,11 @@ onAuthStateChanged(auth, (user) => {
     return;
   }
 
-  const tasksRef = collection(db, "tasks");
+  const completedRef = collection(db, "completedTasks");
 
-  //
   const q = query(
-    tasksRef,
-    where("ownerId", "==", user.uid),
-    where("isCompleted", "==", true),
-    orderBy("completedAt", "desc")
-  );
+    completedRef,
+    where("ownerId", "==", user.uid));
 
   onSnapshot(q, (snap) => {
     if (snap.empty) {
@@ -98,4 +96,4 @@ async function updateTask(id, data) {
 async function deleteTask(id) {
   const { doc, deleteDoc } = await import("firebase/firestore");
   await deleteDoc(doc(db, "tasks", id));
-}
+};
