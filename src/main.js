@@ -3,7 +3,8 @@ import {
   collection,
   query,
   where,
-  getDocs,
+  getDocs, //onSnapshot,
+  updateDoc,
   deleteDoc,
   doc,
 } from "firebase/firestore";
@@ -46,7 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!user) return;
 
     const tasksRef = collection(db, "tasks");
-    const q = query(tasksRef, where("ownerId", "==", user.uid));
+    const q = query(
+      tasksRef,
+      where("ownerId", "==", user.uid),
+      where("isCompleted", "==", false));
 
     const snap = await getDocs(q);
     const tasks = [];
@@ -86,11 +90,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (task.isCompleted) {
         card.querySelector(".evt-title").classList.add("is-done");
-        card.querySelector("input[type='checkbox']").checked = true;
+        card.querySelector(".complete-toggle").checked = true;
       }
 
-      card.querySelector(".evt-edit").dataset.edit = task.id;
-      card.querySelector(".evt-delete").dataset.delete = task.id;
+      card.querySelector(".complete-toggle").dataset.id = task.id;
+      card.querySelector(".edit-btn").dataset.edit = task.id;
+      card.querySelector(".delete-btn").dataset.delete = task.id;
 
       container.appendChild(card);
     });
@@ -100,13 +105,22 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function attachHomeListeners() {
-  document.querySelectorAll("[data-edit]").forEach((btn) => {
+  document.querySelectorAll(".complete-toggle").forEach((box) => {
+    box.addEventListener("change", async () => {
+      await updateDoc(doc(db, "tasks", box.dataset.id), {
+        isCompleted: true,
+        completedAt: Date.now(),
+      });
+    });
+  });
+
+  document.querySelectorAll(".edit-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       window.location.href = `add-event.html?id=${btn.dataset.edit}`;
     });
   });
 
-  document.querySelectorAll("[data-delete]").forEach((btn) => {
+  document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", async () => {
       await deleteDoc(doc(db, "tasks", btn.dataset.delete));
     });
