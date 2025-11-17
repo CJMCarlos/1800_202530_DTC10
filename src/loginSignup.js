@@ -29,6 +29,12 @@ function initAuthUI() {
     el.classList.toggle("d-none", !visible);
   }
 
+  // If open with #signup, show signup form directly
+  if (window.location.hash === "#signup") {
+    setVisible(loginView, false);
+    setVisible(signupView, true);
+  }
+
   // Show error message with accessibility and auto-hide
   let errorTimeout;
   function showError(msg) {

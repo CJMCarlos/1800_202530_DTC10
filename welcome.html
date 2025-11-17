@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Welcome | TimeMate</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script type="module" src="./src/components/site-footer.js"></script>
+
+    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/welcome.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="body-bg">
+    <div class="welcome-container">
+      <img src="./images/welcome.png" class="welcome-logo" />
+
+      <h1>Welcome to TimeMate</h1>
+      <p>Your calm way to manage time.</p>
+
+      <button onclick="location.href='./login.html'">Login</button>
+      <button onclick="location.href='./login.html#signup'">
+        Create Account
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <site-footer></site-footer>
+
+    <script type="module" src="./src/firebaseConfig.js"></script>
+    <script type="module" src="./src/checkAuthRedirect.js"></script>
+  </body>
+</html>

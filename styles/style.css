@@ -91,10 +91,15 @@ body {
   height: 60px;
   background: #d4d9d2; /* Minimal Calm green */
   border-radius: 20px;
-  box-shadow: 0px 5px 14px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* Hover effect */
+.fab:hover {
+  background: #c6cbc4;
 }
 
 .fab svg {
@@ -184,4 +189,38 @@ body {
 
 .submit-btn:active {
   background: #babfb8;
+}
+
+/* navbar hover */
+.nav-icon-box {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: #f5f5f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.25s ease;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 3px;
+}
+
+/* Hover effect */
+.nav-btn:hover .nav-icon-box {
+  background: #e5e7e2;
+  transform: translateY(-2px);
+}
+
+/* Active tab */
+.nav-btn.active .nav-icon-box {
+  background: #d4d9d2;
+  border: 2px solid #c2c7bf;
+  transform: translateY(-3px);
+}
+
+/* Make icons smaller inside */
+.nav-icon-box svg {
+  width: 32px;
+  height: 32px;
+  stroke-width: 2.2px;
 }
