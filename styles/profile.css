@@ -55,11 +55,6 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.edit-profile-pic-btn:hover {
-  background: #3f4b3d;
-  transform: scale(1.05);
-}
-
 .edit-icon {
   width: 32px;
   height: 32px;
