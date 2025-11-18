@@ -1,4 +1,4 @@
-# Elmo Hikes
+# TimeMate
 
 ## Overview
 
