@@ -1,6 +1,7 @@
 class SiteNavbar extends HTMLElement {
   connectedCallback() {
     const currentPage = window.location.pathname.split("/").pop();
+    const isDarkMode = localStorage.getItem("theme") === "dark";
 
     this.innerHTML = `
 <nav class="navbar">
@@ -8,7 +9,7 @@ class SiteNavbar extends HTMLElement {
     <img src="/images/image1.png" width="150" height="100" alt="TimeMate Logo" class="navbar-logo" />
   </div>
 
-    <!-- Hamburger menu -->
+  <!-- hamburger menu nom nom -->
   <button class="icon" type="button" aria-label="Toggle menu">
     <svg xmlns="http://www.w3.org/2000/svg" height="42px" viewBox="0 -960 960 960" width="42px" fill="#2f2f2f">
       <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
@@ -16,18 +17,31 @@ class SiteNavbar extends HTMLElement {
   </button>
 </nav>
 
-  <div class="topnav-links" id="menu">
-    <a href="help.html" class="${currentPage === "help.html" ? "active" : ""}">Help</a>
-    <a href="contact.html" class="${currentPage === "contact.html" ? "active" : ""}">Contact</a>
-    <a href="about.html" class="${currentPage === "about.html" ? "active" : ""}">About Us</a>
-  </div>
+<div class="topnav-links" id="menu">
+  <a href="help.html" class="${
+    currentPage === "help.html" ? "active" : ""
+  }">Help</a>
+  <a href="contact.html" class="${
+    currentPage === "contact.html" ? "active" : ""
+  }">Contact</a>
+  <a href="about.html" class="${
+    currentPage === "about.html" ? "active" : ""
+  }">About Us</a>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor">
+      <path d="M480-120q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-480q0-75 28.5-140.5t77-114q48.5-48.5 114-77T480-840q8 0 15 .5t15 2.5q-36 32-57.5 79.5T432-600q0 90 63 153t153 63q46 0 93.5-21.5T821-450q2 7 2.5 14t.5 14q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-120Z"/>
+    </svg>
+    <span>${isDarkMode ? "Light" : "Dark"}</span>
+  </button>
+</div>
 
 
     `;
 
-    // JS to toggle the dropdown
+    // toggle the dropdown
     const links = this.querySelector("#menu");
     const iconBtn = this.querySelector(".icon");
+    const themeToggleBtn = this.querySelector("#themeToggle");
 
     iconBtn.addEventListener("click", () => {
       if (links.style.display === "flex") {
@@ -36,6 +50,37 @@ class SiteNavbar extends HTMLElement {
         links.style.display = "flex";
       }
     });
+
+    // close menu when a link is clicked
+    links.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        links.style.display = "none";
+      });
+    });
+
+    // close menu when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!this.contains(e.target)) {
+        links.style.display = "none";
+      }
+    });
+
+    // batman theme toggle
+    themeToggleBtn.addEventListener("click", () => {
+      const isDark =
+        document.documentElement.getAttribute("data-theme") === "dark";
+      const newTheme = isDark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+      themeToggleBtn.querySelector("span").textContent = isDark
+        ? "Dark"
+        : "Light";
+    });
+
+    // apply saved theme on load
+    if (isDarkMode) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
   }
 }
 

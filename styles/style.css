@@ -1,6 +1,7 @@
 .body-bg {
   background-color: #f5f3ed;
   font-family: "Inter", sans-serif;
+  overflow-x: hidden;
 }
 
 body {
@@ -10,6 +11,7 @@ body {
   color: #2f2f2f;
   letter-spacing: 0.2px;
   background: #f5f3ed;
+  overflow-x: hidden;
 }
 
 .navbar-logo {
@@ -20,33 +22,55 @@ body {
 .navbar {
   background: #f5f3ed;
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 /* Hamburger Menu */
 .topnav-links {
   display: none;
-  overflow: hidden;
+  position: fixed;
+  top: 85px;
+  right: 20px;
+  overflow: visible;
   flex-direction: column;
   gap: 16px;
+  background: #f5f3ed;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: auto;
+  width: max-content;
 }
 /* Hamburger Menu Text */
 .topnav-links a {
-  text-align: right;
+  text-align: center;
   text-decoration: none;
   border-color: #2f2f2f;
   color: #2f2f2f;
   padding: 8px 12px;
-  margin-right: 30px;
-  border-radius: 12px;
+  margin-right: 0;
+  border-radius: 8px;
   font-size: 14px;
+  border: 1px solid #d4d6d3;
+  background: #ffffff;
+  transition: 0.2s ease;
+}
+
+.topnav-links a:hover {
+  background: #e5e7e2;
+  border-color: #b8bfb3;
 }
 
 /* Show which page is active */
 .topnav-links a.active {
-  background: #e5e7e2;
+  background: #d4d9d2;
   font-weight: 600;
+  border-color: #b8bfb3;
 }
 
 .icon {
@@ -56,6 +80,29 @@ body {
   border: none;
   color: #2f2f2f;
   cursor: pointer;
+  position: absolute;
+  right: 20px;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid #d4d6d3;
+  color: #2f2f2f;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  transition: 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: #e5e7e2;
+  border-color: #b8bfb3;
 }
 
 /* === Minimal Calm Navbar === */
@@ -249,4 +296,132 @@ body {
   width: 32px;
   height: 32px;
   stroke-width: 2.2px;
+}
+
+/* ================================
+   DARK MODE
+================================ */
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] .body-bg,
+html[data-theme="dark"] body {
+  background-color: #0f1419;
+  color: #e8eaed;
+}
+
+html[data-theme="dark"] .navbar {
+  background: #0f1419;
+}
+
+html[data-theme="dark"] .topnav-links {
+  background: #1a1f2e;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+html[data-theme="dark"] .topnav-links a {
+  color: #e8eaed;
+  border-color: #2a3142;
+  background: #161b2a;
+}
+
+html[data-theme="dark"] .topnav-links a:hover {
+  background: #212840;
+  border-color: #3a4452;
+}
+
+html[data-theme="dark"] .topnav-links a.active {
+  background: #2d5a5d;
+  border-color: #3a7c7f;
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .icon {
+  background-color: #0f1419;
+  color: #e8eaed;
+}
+
+html[data-theme="dark"] .icon svg {
+  fill: #e8eaed;
+}
+
+html[data-theme="dark"] .theme-toggle {
+  border-color: #2a3142;
+  color: #e8eaed;
+  background: #161b2a;
+}
+
+html[data-theme="dark"] .theme-toggle:hover {
+  background: #212840;
+  border-color: #3a4452;
+}
+
+html[data-theme="dark"] .task-form {
+  background: #1a1f2e;
+  border-color: #2a3142;
+}
+
+html[data-theme="dark"] .task-form .form-label {
+  color: #d0d2d6;
+}
+
+html[data-theme="dark"] .task-form .form-control {
+  background: #161b2a;
+  border-color: #2a3142;
+  color: #e8eaed;
+}
+
+html[data-theme="dark"] .task-form .form-control:focus {
+  border-color: #3a7c7f;
+  box-shadow: 0 0 0 3px rgba(58, 124, 127, 0.25);
+}
+
+html[data-theme="dark"] .task-form .form-control::placeholder {
+  color: #a0a3a8;
+}
+
+html[data-theme="dark"] .submit-btn {
+  background: #2d5a5d;
+  color: #ffffff;
+  border-color: #3a7c7f;
+}
+
+html[data-theme="dark"] .submit-btn:hover {
+  background: #3a7c7f;
+  border-color: #4a9ca2;
+}
+
+html[data-theme="dark"] .submit-btn:active {
+  background: #2a4a4d;
+}
+
+html[data-theme="dark"] .page-title {
+  color: #e8eaed;
+}
+
+html[data-theme="dark"] .footer-nav {
+  background: #1a1f2e;
+  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.5);
+}
+
+html[data-theme="dark"] .nav-btn {
+  color: #e8eaed;
+}
+
+html[data-theme="dark"] .nav-btn svg {
+  stroke: #e8eaed;
+}
+
+html[data-theme="dark"] .nav-icon-box {
+  background: #161b2a;
+}
+
+html[data-theme="dark"] .nav-btn:hover .nav-icon-box {
+  background: #212840;
+}
+
+html[data-theme="dark"] .nav-btn.active .nav-icon-box {
+  background: #2d5a5d;
 }
