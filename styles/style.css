@@ -19,17 +19,43 @@ body {
 
 .navbar {
   background: #f5f3ed;
-  padding-top: 20px;
-  height: 70px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-.navbar-center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+/* Hamburger Menu */
+.topnav-links {
+  display: none;
+  overflow: hidden;
+  flex-direction: column;
+  gap: 16px;
+}
+/* Hamburger Menu Text */
+.topnav-links a {
+  text-align: right;
+  text-decoration: none;
+  border-color: #2f2f2f;
+  color: #2f2f2f;
+  padding: 8px 12px;
+  margin-right: 30px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+/* Show which page is active */
+.topnav-links a.active {
+  background: #e5e7e2;
+  font-weight: 600;
+}
+
+.icon {
+  justify-content: flex-end;
+  margin-right: 20px;
+  background-color: #f5f3ed;
+  border: none;
+  color: #2f2f2f;
+  cursor: pointer;
 }
 
 /* === Minimal Calm Navbar === */
