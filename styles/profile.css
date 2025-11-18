@@ -1,4 +1,3 @@
-/* PAGE LAYOUT */
 .profile-container {
   width: 100%;
   max-width: 820px;
@@ -10,7 +9,6 @@
   position: relative;
 }
 
-/* PROFILE PICTURE SECTION */
 .profile-picture-section {
   display: flex;
   justify-content: center;
@@ -58,9 +56,6 @@
   fill: none;
 }
 
-/* ================================
-   EDIT PROFILE SECTION
-================================ */
 .edit-profile-section {
   background: linear-gradient(
     to right,
@@ -106,8 +101,6 @@
   background: #eef0ee;
   border-color: #b8bfb3;
 }
-
-/* profile form */
 
 .profile-form {
   display: flex;
@@ -163,7 +156,6 @@
   display: block;
 }
 
-/* lougout section */
 .logout-section {
   display: flex;
   justify-content: center;
@@ -185,7 +177,6 @@
   background: #ffebee;
 }
 
-/* mobile fix */
 @media (max-width: 480px) {
   .profile-container {
     padding: 0 16px;
@@ -229,8 +220,6 @@
     height: 20px;
   }
 }
-
-/* BATMAN MODE */
 
 html[data-theme="dark"] .profile-container {
   color: #e8eaed;
