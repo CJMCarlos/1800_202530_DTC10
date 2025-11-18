@@ -1,8 +1,8 @@
-# Elmo Hikes
+# TimeMate
 
 ## Overview
 
-Elmo Hikes is a client-side JavaScript web application that helps users discover and explore hiking trails. The app displays a curated list of hike trails, each with details such as name, location, difficulty, and an image. Users can browse the list and mark their favorite trails for easy access later.
+Our team DTC10 (The Socks) is developing TimeMate to help students and employed people stay organized and manage procrastination by reminding them of tasks, deadlines, and events, encouraging them to complete tasks on time in school or workplace.
 
 Developed for the COMP 1800 course, this project applies User-Centred Design practices and agile project management, and demonstrates integration with Firebase backend services for storing user favorites.
 
@@ -10,46 +10,80 @@ Developed for the COMP 1800 course, this project applies User-Centred Design pra
 
 ## Features
 
-- Browse a list of curated hiking trails with images and details
-- Mark and unmark trails as favorites
-- View a personalized list of favorite hikes
-- Responsive design for desktop and mobile
+- User authentication with Firebase (email/password signup and login)
+- Create, edit, and delete tasks/events with titles, descriptions, and due dates
+- Mark tasks as completed with visual feedback
+- View completed tasks in a separate "Completed" section
+- Restore completed tasks back to active tasks
+- Search and filter events in real-time
+- Personalized user profile with profile picture upload
+- Edit username and password from user profile
+- Smooth page transitions and animations
+- Light and dark mode toggle (theme persisted in local storage)
+- Responsive design for desktop and mobile devices
+- Task/event data persisted in Firestore database
 
 ---
 
 ## Technologies Used
 
-Example:
-
 - **Frontend**: HTML, CSS, JavaScript
-- **Build Tool**: [Vite](https://vitejs.dev/)
-- **Backend**: Firebase for hosting
-- **Database**: Firestore
+- **Build Tool**: Vite
+- **Backend**: Firebase (Authentication & Firestore Database)
+- **Styling**: Custom CSS with dark mode support
+- **Version Control**: Git
 
 ---
 
 ## Usage
 
-1. Open your browser and visit `http://localhost:3000`.
-2. Browse the list of hiking trails displayed on the main page.
-3. Click the heart icon (or similar) to mark a trail as a favorite.
-4. View your favorite hikes in the favorites section.
+1. Visit the application (deployed or local instance).
+2. Sign up or log in with your email and password.
+3. Create tasks/events using the "+ Add" button on the Events page.
+4. Set titles, descriptions, and due dates for your tasks.
+5. Mark tasks as completed by checking the checkbox.
+6. View completed tasks on the "Completed" page and restore or delete them.
+7. Manage your profile: upload a profile picture, edit username, and change password.
+8. Toggle between light and dark mode using the theme button in the menu.
 
 ---
 
 ## Project Structure
 
 ```
-elmo-hikes/
+1800_202530_DTC10/
 ├── src/
+│   ├── components/
+│   │   ├── site-navbar.js
+│   │   └── site-footer.js
 │   ├── main.js
+│   ├── event.js
+│   ├── complete.js
+│   ├── profile.js
+│   ├── authentication.js
+│   ├── firebaseConfig.js
+│   ├── pageTransition.js
+│   └── [other modules]
 ├── styles/
-│   └── style.css
-├── public/
+│   ├── style.css
+│   ├── home.css
+│   ├── event.css
+│   ├── complete.css
+│   ├── profile.css
+│   └── [other stylesheets]
 ├── images/
-├── index.html
+│   ├── image1.png (logo)
+│   ├── editprofile.svg
+│   └── [other assets]
+├── [HTML pages]
+│   ├── index.html
+│   ├── event.html
+│   ├── complete.html
+│   ├── profile.html
+│   ├── login.html
+│   └── [other pages]
 ├── package.json
-├── README.md
+└── README.md
 ```
 
 ---
@@ -64,9 +98,10 @@ elmo-hikes/
 
 ## Acknowledgments
 
-- Trail data and images are for demonstration purposes only.
+- User data and image profiles are for demonstration purposes only.
 - Code snippets were adapted from resources such as [Stack Overflow](https://stackoverflow.com/) and [MDN Web Docs](https://developer.mozilla.org/).
-- Icons sourced from [FontAwesome](https://fontawesome.com/) and images from [Unsplash](https://unsplash.com/).
+- Icons sourced from [Google Material Icons](https://fonts.google.com/icons) and [FontAwesome](https://fontawesome.com/).
+- Firebase documentation and tutorials provided essential guidance for backend integration.
 
 ---
 
@@ -74,14 +109,24 @@ elmo-hikes/
 
 ### Limitations
 
-- Limited trail details (e.g., no live trail conditions).
-- Accessibility features can be further improved.
+- Limited task filtering options (basic search only; no advanced filters by date, priority, or category).
+- No recurring tasks or task templates.
+- Profile picture storage is limited to base64 data URIs (large image sizes may impact performance).
+- Accessibility features can be further improved (e.g., ARIA labels, keyboard navigation enhancements).
+- No real-time collaboration or task sharing between users.
+- Dark mode theme toggle is stored locally; no cloud-based theme preference sync.
+- No notification/reminder system for upcoming deadlines.
+- Limited offline functionality; requires internet connection for all operations.
 
 ### Future Work
 
-- Implement map view and trailhead directions.
-- Add filtering and sorting options (e.g., by difficulty, distance).
-- Create a dark mode for better usability in low-light conditions.
+- Implement task categories and tags for better organization.
+- Add recurring task functionality (daily, weekly, monthly).
+- Create task priority levels with visual indicators.
+- Implement due date reminders and push notifications.
+- Add task subtasks/checklists within events.
+- Enable task sharing and collaboration between users.
+- Implement time-tracking features for tasks.
 
 ---
 
