@@ -322,3 +322,105 @@
   top: calc(100% + 8px);
   z-index: 50; /* ensure actions are visible above nearby elements */
 }
+
+/* Batman mode */
+
+html[data-theme="dark"] .home-container {
+  color: #e8eaed;
+}
+
+html[data-theme="dark"] .greet-card {
+  background: linear-gradient(
+    to right,
+    #1a1f2e 0%,
+    #1a1f2e 55%,
+    rgba(26, 31, 46, 0.6) 80%,
+    rgba(26, 31, 46, 0.2) 100%
+  );
+  border-color: #2a3142;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] .greet-combined {
+  color: #3a7c7f;
+}
+
+html[data-theme="dark"] .greet-combined #greet-time {
+  color: #3a7c7f;
+}
+
+html[data-theme="dark"] .greet-date {
+  color: #a0a3a8;
+}
+
+html[data-theme="dark"] .section-header h2 {
+  color: #e8eaed;
+}
+
+html[data-theme="dark"] .view-all-btn,
+html[data-theme="dark"] .edit-btn {
+  background: #212840;
+  border-color: #2a3142;
+  color: #e8eaed;
+}
+
+html[data-theme="dark"] .view-all-btn:hover,
+html[data-theme="dark"] .edit-btn:hover {
+  background: #2a3a50;
+  border-color: #3a4452;
+}
+
+html[data-theme="dark"] .evt-card {
+  background: #1a1f2e;
+  border-color: #2a3142;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] .evt-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme="dark"] .evt-check {
+  border-color: #2a3142;
+}
+
+html[data-theme="dark"] .evt-check:has(input:checked) {
+  background: #3a7c7f;
+  border-color: #4a9ca2;
+}
+
+html[data-theme="dark"] .evt-title {
+  color: #e8eaed;
+}
+
+html[data-theme="dark"] .evt-date {
+  color: #a0a3a8;
+}
+
+html[data-theme="dark"] .evt-desc {
+  color: #b0b3b8;
+}
+
+html[data-theme="dark"] .evt-btn {
+  background: #212840;
+  border-color: #2a3142;
+  color: #e8eaed;
+}
+
+html[data-theme="dark"] .evt-btn:hover {
+  background: #2a3a50;
+}
+
+html[data-theme="dark"] .evt-btn-danger {
+  background: #3a2525;
+  border-color: #5a3535;
+}
+
+html[data-theme="dark"] .evt-btn-danger:hover {
+  background: #4a3535;
+}
+
+html[data-theme="dark"] .inline-editor .editor-input {
+  color: #e8eaed;
+  border-bottom-color: #3a7c7f;
+}
