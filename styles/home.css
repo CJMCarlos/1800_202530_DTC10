@@ -99,288 +99,286 @@
 }
 
 .events-list {
-  .events-list {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.evt-card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px 20px 20px;
+  border: 1px solid #f1f1ee;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: 0.15s ease;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+}
+
+.evt-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.evt-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.evt-left {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.evt-check {
+  width: 28px;
+  height: 28px;
+  border: 2px solid #cdd3cf;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: 0.15s ease;
+  margin-top: 3px;
+}
+
+.evt-check input {
+  display: none;
+}
+
+.check-icon {
+  width: 20px;
+  height: 20px;
+  stroke: white;
+  stroke-width: 3;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: 0.15s ease;
+}
+
+.evt-check:has(input:checked) {
+  background: #a8b4ad;
+  border-color: #8e9b94;
+}
+
+.evt-check:has(input:checked) .check-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.evt-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.evt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+}
+
+.evt-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+  color: #2f2f2f;
+}
+
+.evt-date {
+  font-size: 15px;
+  color: #848484;
+  white-space: nowrap;
+}
+
+.evt-desc {
+  min-height: 18px;
+  font-size: 15px;
+  color: #6d6d6d;
+}
+
+.evt-actions {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.evt-btn {
+  padding: 6px 14px;
+  font-size: 15px;
+  border-radius: 12px;
+  background: #eef0ee;
+  border: 1px solid #d4d6d3;
+  color: #3e3e3e;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.evt-btn:hover {
+  background: #e3e5e3;
+}
+
+.evt-btn-danger {
+  background: #f2f2f2;
+  border-color: #d6d7d5;
+}
+
+.evt-btn-danger:hover {
+  background: #e8e8e8;
+}
+
+@media (max-width: 480px) {
+  .home-container {
+    padding: 0 16px;
   }
 
   .evt-card {
-    position: relative;
-    background: #ffffff;
-    border-radius: 18px;
-    padding: 18px 20px 20px;
-    border: 1px solid #f1f1ee;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    transition: 0.15s ease;
-    box-sizing: border-box;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .evt-card:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  }
-
-  .evt-top {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .evt-left {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-  }
-
-  .evt-check {
-    width: 28px;
-    height: 28px;
-    border: 2px solid #cdd3cf;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    flex-shrink: 0;
-    transition: 0.15s ease;
-    margin-top: 3px;
-  }
-
-  .evt-check input {
-    display: none;
-  }
-
-  .check-icon {
-    width: 20px;
-    height: 20px;
-    stroke: white;
-    stroke-width: 3;
-    opacity: 0;
-    transform: scale(0.5);
-    transition: 0.15s ease;
-  }
-
-  .evt-check:has(input:checked) {
-    background: #a8b4ad;
-    border-color: #8e9b94;
-  }
-
-  .evt-check:has(input:checked) .check-icon {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .evt-info {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    width: 100%;
-  }
-
-  .evt-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    flex-wrap: wrap;
-    gap: 6px 10px;
-  }
-
-  .evt-title {
-    font-size: 17px;
-    font-weight: 600;
-    margin: 0;
-    color: #2f2f2f;
-  }
-
-  .evt-date {
-    font-size: 15px;
-    color: #848484;
-    white-space: nowrap;
-  }
-
-  /* description */
-  .evt-desc {
-    min-height: 18px;
-    font-size: 15px;
-    color: #6d6d6d;
+    padding: 16px 16px 70px;
   }
 
   .evt-actions {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
-    display: flex;
-    gap: 10px;
+    right: 10px;
+    bottom: 10px;
   }
+}
 
-  .evt-btn {
-    padding: 6px 14px;
-    font-size: 15px;
-    border-radius: 12px;
-    background: #eef0ee;
-    border: 1px solid #d4d6d3;
-    color: #3e3e3e;
-    cursor: pointer;
-    transition: 0.15s ease;
-  }
+.inline-editor {
+  min-width: 0;
+  flex-shrink: 1;
+  position: relative;
+}
 
-  .evt-btn:hover {
-    background: #e3e5e3;
-  }
+.inline-editor .editor-input {
+  font: inherit;
+  font-size: 28px;
+  font-weight: 700;
+  color: #2f2f2f;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #51624f;
+  padding: 0 4px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
 
-  .evt-btn-danger {
-    background: #f2f2f2;
-    border-color: #d6d7d5;
-  }
+.inline-editor .editor-actions {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 50;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
 
-  .evt-btn-danger:hover {
-    background: #e8e8e8;
-  }
+html[data-theme="dark"] .home-container {
+  color: #e8eaed;
+}
 
-  @media (max-width: 480px) {
-    .home-container {
-      padding: 0 16px;
-    }
+html[data-theme="dark"] .greet-card {
+  background: linear-gradient(
+    to right,
+    #1a1f2e 0%,
+    #1a1f2e 55%,
+    rgba(26, 31, 46, 0.6) 80%,
+    rgba(26, 31, 46, 0.2) 100%
+  );
+  border-color: #2a3142;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
 
-    .evt-card {
-      padding: 16px 16px 70px;
-    }
+html[data-theme="dark"] .greet-combined {
+  color: #3a7c7f;
+}
 
-    .evt-actions {
-      right: 10px;
-      bottom: 10px;
-    }
-  }
+html[data-theme="dark"] .greet-combined #greet-time {
+  color: #3a7c7f;
+}
 
-  /* Inline editor styles for greeting username edit */
-  .inline-editor {
-    min-width: 0;
-    flex-shrink: 1;
-    position: relative;
-  }
-  .inline-editor .editor-input {
-    font: inherit;
-    font-size: 28px;
-    font-weight: 700;
-    color: #2f2f2f;
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid #51624f;
-    padding: 0 4px;
-    outline: none;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  .inline-editor .editor-actions {
-    position: absolute;
-    right: 0;
-    top: calc(100% + 8px);
-    z-index: 50;
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-  }
+html[data-theme="dark"] .greet-date {
+  color: #a0a3a8;
+}
 
-  html[data-theme="dark"] .home-container {
-    color: #e8eaed;
-  }
+html[data-theme="dark"] .section-header h2 {
+  color: #e8eaed;
+}
 
-  html[data-theme="dark"] .greet-card {
-    background: linear-gradient(
-      to right,
-      #1a1f2e 0%,
-      #1a1f2e 55%,
-      rgba(26, 31, 46, 0.6) 80%,
-      rgba(26, 31, 46, 0.2) 100%
-    );
-    border-color: #2a3142;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  }
+html[data-theme="dark"] .view-all-btn,
+html[data-theme="dark"] .edit-btn {
+  background: #212840;
+  border-color: #2a3142;
+  color: #e8eaed;
+}
 
-  html[data-theme="dark"] .greet-combined {
-    color: #3a7c7f;
-  }
+html[data-theme="dark"] .view-all-btn:hover,
+html[data-theme="dark"] .edit-btn:hover {
+  background: #2a3a50;
+  border-color: #3a4452;
+}
 
-  html[data-theme="dark"] .greet-combined #greet-time {
-    color: #3a7c7f;
-  }
+html[data-theme="dark"] .evt-card {
+  background: #1a1f2e;
+  border-color: #2a3142;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
 
-  html[data-theme="dark"] .greet-date {
-    color: #a0a3a8;
-  }
+html[data-theme="dark"] .evt-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
 
-  html[data-theme="dark"] .section-header h2 {
-    color: #e8eaed;
-  }
+html[data-theme="dark"] .evt-check {
+  border-color: #2a3142;
+}
 
-  html[data-theme="dark"] .view-all-btn,
-  html[data-theme="dark"] .edit-btn {
-    background: #212840;
-    border-color: #2a3142;
-    color: #e8eaed;
-  }
+html[data-theme="dark"] .evt-check:has(input:checked) {
+  background: #3a7c7f;
+  border-color: #4a9ca2;
+}
 
-  html[data-theme="dark"] .view-all-btn:hover,
-  html[data-theme="dark"] .edit-btn:hover {
-    background: #2a3a50;
-    border-color: #3a4452;
-  }
+html[data-theme="dark"] .evt-title {
+  color: #e8eaed;
+}
 
-  html[data-theme="dark"] .evt-card {
-    background: #1a1f2e;
-    border-color: #2a3142;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  }
+html[data-theme="dark"] .evt-date {
+  color: #a0a3a8;
+}
 
-  html[data-theme="dark"] .evt-card:hover {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  }
+html[data-theme="dark"] .evt-desc {
+  color: #b0b3b8;
+}
 
-  html[data-theme="dark"] .evt-check {
-    border-color: #2a3142;
-  }
+html[data-theme="dark"] .evt-btn {
+  background: #212840;
+  border-color: #2a3142;
+  color: #e8eaed;
+}
 
-  html[data-theme="dark"] .evt-check:has(input:checked) {
-    background: #3a7c7f;
-    border-color: #4a9ca2;
-  }
+html[data-theme="dark"] .evt-btn:hover {
+  background: #2a3a50;
+}
 
-  html[data-theme="dark"] .evt-title {
-    color: #e8eaed;
-  }
+html[data-theme="dark"] .evt-btn-danger {
+  background: #3a2525;
+  border-color: #5a3535;
+}
 
-  html[data-theme="dark"] .evt-date {
-    color: #a0a3a8;
-  }
+html[data-theme="dark"] .evt-btn-danger:hover {
+  background: #4a3535;
+}
 
-  html[data-theme="dark"] .evt-desc {
-    color: #b0b3b8;
-  }
-
-  html[data-theme="dark"] .evt-btn {
-    background: #212840;
-    border-color: #2a3142;
-    color: #e8eaed;
-  }
-
-  html[data-theme="dark"] .evt-btn:hover {
-    background: #2a3a50;
-  }
-
-  html[data-theme="dark"] .evt-btn-danger {
-    background: #3a2525;
-    border-color: #5a3535;
-  }
-
-  html[data-theme="dark"] .evt-btn-danger:hover {
-    background: #4a3535;
-  }
-
-  html[data-theme="dark"] .inline-editor .editor-input {
-    color: #e8eaed;
-    border-bottom-color: #3a7c7f;
-  }
+html[data-theme="dark"] .inline-editor .editor-input {
+  color: #e8eaed;
+  border-bottom-color: #3a7c7f;
 }
