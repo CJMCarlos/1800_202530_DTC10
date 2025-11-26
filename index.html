@@ -21,62 +21,64 @@
   </head>
 
   <body class="body-bg">
-    <site-navbar></site-navbar>
+    <div class="page-wrapper">
+      <site-navbar></site-navbar>
 
-    <main class="home-container">
-      <!-- Greeting Section -->
-      <div class="greet-card">
-        <h2 class="greet-combined">
-          <span id="greet-time">Good Evening</span>,
-          <span id="name-goes-here">User</span>
-        </h2>
-        <p class="greet-date" id="today-date"></p>
-      </div>
+      <main class="home-container">
+        <!-- Greeting Section -->
+        <div class="greet-card">
+          <h2 class="greet-combined">
+            <span id="greet-time">Good Evening</span>,
+            <span id="name-goes-here">User</span>
+          </h2>
+          <p class="greet-date" id="today-date"></p>
+        </div>
 
-      <!-- Upcoming Events -->
-      <div class="section-header">
-        <h2>Upcoming Events</h2>
-        <a href="event.html" class="view-all-btn">View All</a>
-      </div>
+        <!-- Upcoming Events -->
+        <div class="section-header">
+          <h2>Upcoming Events</h2>
+          <a href="event.html" class="view-all-btn">View All</a>
+        </div>
 
-      <!-- Event preview list -->
-      <div id="tasks-go-here" class="events-list"></div>
-    </main>
+        <!-- Event preview list -->
+        <div id="tasks-go-here" class="events-list"></div>
+      </main>
 
-    <site-footer></site-footer>
+      <site-footer></site-footer>
 
-    <!-- Template -->
-    <template id="HomeEventPreview">
-      <div class="evt-card">
-        <div class="evt-content">
-          <div class="evt-top">
-            <div class="evt-left">
-              <label class="evt-check">
-                <input type="checkbox" class="complete-toggle" />
-                <svg class="check-icon" viewBox="0 0 24 24">
-                  <path d="M20 6L9 17l-5-5" stroke-width="3" fill="none" />
-                </svg>
-              </label>
+      <!-- Template -->
+      <template id="HomeEventPreview">
+        <div class="evt-card">
+          <div class="evt-content">
+            <div class="evt-top">
+              <div class="evt-left">
+                <label class="evt-check">
+                  <input type="checkbox" class="complete-toggle" />
+                  <svg class="check-icon" viewBox="0 0 24 24">
+                    <path d="M20 6L9 17l-5-5" stroke-width="3" fill="none" />
+                  </svg>
+                </label>
 
-              <div class="evt-info">
-                <div class="evt-row">
-                  <h5 class="evt-title"></h5>
-                  <small class="evt-date"></small>
+                <div class="evt-info">
+                  <div class="evt-row">
+                    <h5 class="evt-title"></h5>
+                    <small class="evt-date"></small>
+                  </div>
+
+                  <p class="evt-desc"></p>
                 </div>
-
-                <p class="evt-desc"></p>
               </div>
             </div>
-          </div>
 
-          <!-- Buttons -->
-          <div class="evt-actions">
-            <button class="evt-btn edit-btn">Edit</button>
-            <button class="evt-btn evt-btn-danger delete-btn">Delete</button>
+            <!-- Buttons -->
+            <div class="evt-actions">
+              <button class="evt-btn edit-btn">Edit</button>
+              <button class="evt-btn evt-btn-danger delete-btn">Delete</button>
+            </div>
           </div>
         </div>
-      </div>
-    </template>
+      </template>
+    </div>
 
     <script type="module" src="./src/main.js"></script>
   </body>
