@@ -11,6 +11,9 @@ import {
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
+let animationTimeout = null;
+let isAnimating = false;
+
 document.addEventListener("DOMContentLoaded", () => {
   const addEventBtn = document.getElementById("addEventBtn");
   const eventList = document.getElementById("eventList");
@@ -36,14 +39,30 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     let allTasks = [];
+    let hasInitialLoad = false;
 
     onSnapshot(q, (snap) => {
-      allTasks = snap.docs.map((d) => ({
+      const newTasks = snap.docs.map((d) => ({
         id: d.id,
         ...d.data(),
       }));
 
-      renderTasks(allTasks);
+      // only delay if animation is currently happening
+      if (isAnimating && hasInitialLoad) {
+        if (animationTimeout) {
+          clearTimeout(animationTimeout);
+        }
+        animationTimeout = setTimeout(() => {
+          allTasks = newTasks;
+          renderTasks(allTasks);
+          animationTimeout = null;
+        }, 1300); // wait for animation to complete
+      } else {
+        // load immediately on first load and when no animation
+        allTasks = newTasks;
+        renderTasks(allTasks);
+        hasInitialLoad = true;
+      }
     });
 
     function renderTasks(list) {
@@ -116,6 +135,14 @@ function attachListeners() {
       const title = card.querySelector(".evt-title").textContent;
 
       try {
+        // Set animating flag
+        isAnimating = true;
+
+        // Animate card slide out to the right
+        card.style.transform = "translateX(400px)";
+        card.style.opacity = "0";
+        card.style.marginBottom = "-100px";
+
         await updateDoc(doc(db, "tasks", box.dataset.id), {
           isCompleted: true,
           completedAt: Date.now(),
@@ -123,9 +150,18 @@ function attachListeners() {
 
         // Show success notification
         showNotification(`"${title}" completed!`);
+
+        // Reset flag after animation completes
+        setTimeout(() => {
+          isAnimating = false;
+        }, 1300);
       } catch (err) {
         console.error("Error completing task:", err);
         box.checked = false; // Revert checkbox on error
+        // Revert animation on error
+        card.style.transform = "translateX(0)";
+        card.style.opacity = "1";
+        isAnimating = false;
       }
     });
   });
@@ -138,7 +174,31 @@ function attachListeners() {
 
   document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", async () => {
-      await deleteDoc(doc(db, "tasks", btn.dataset.delete));
+      const card = btn.closest(".evt-card");
+      const title = card.querySelector(".evt-title").textContent;
+
+      try {
+        // Set animating flag
+        isAnimating = true;
+
+        // Fade out the card
+        card.style.opacity = "0";
+        card.style.marginBottom = "-100px";
+
+        await deleteDoc(doc(db, "tasks", btn.dataset.delete));
+        showNotification(`"${title}" deleted!`);
+
+        // Reset flag after animation completes
+        setTimeout(() => {
+          isAnimating = false;
+        }, 1300);
+      } catch (err) {
+        console.error("Error deleting task:", err);
+        showNotification("Failed to delete task");
+        // Revert animation on error
+        card.style.opacity = "1";
+        isAnimating = false;
+      }
     });
   });
 }
@@ -170,6 +230,4 @@ function showNotification(message) {
       notification.remove();
     }, 300);
   }, 1700);
-    }, 300);
-  }, 3000);
 }
