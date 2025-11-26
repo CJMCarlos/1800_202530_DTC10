@@ -21,78 +21,84 @@
   </head>
 
   <body class="body-bg">
-    <site-navbar></site-navbar>
+    <div class="page-wrapper">
+      <site-navbar></site-navbar>
 
-    <main class="profile-container">
-      <!-- Profile Picture Section -->
-      <div class="profile-picture-section">
-        <div class="profile-picture-wrapper">
-          <img
-            id="profilePictureDisplay"
-            src=""
-            alt="Profile Picture"
-            class="profile-picture"
-          />
-          <input
-            type="file"
-            id="profilePictureInput"
-            accept="image/*"
-            style="display: none"
-          />
-          <button
-            id="editProfilePicBtn"
-            class="edit-profile-pic-btn"
-            aria-label="Edit profile picture"
-          >
-            <img src="./images/editprofile.svg" alt="Edit" class="edit-icon" />
-          </button>
-        </div>
-      </div>
-
-      <!-- Edit Profile Section -->
-      <div class="edit-profile-section">
-        <div class="edit-profile-header">
-          <h2>Edit Profile</h2>
-          <button id="saveProfileBtn" class="save-btn">Save</button>
+      <main class="profile-container">
+        <!-- Profile Picture Section -->
+        <div class="profile-picture-section">
+          <div class="profile-picture-wrapper">
+            <img
+              id="profilePictureDisplay"
+              src=""
+              alt="Profile Picture"
+              class="profile-picture"
+            />
+            <input
+              type="file"
+              id="profilePictureInput"
+              accept="image/*"
+              style="display: none"
+            />
+            <button
+              id="editProfilePicBtn"
+              class="edit-profile-pic-btn"
+              aria-label="Edit profile picture"
+            >
+              <img
+                src="./images/editprofile.svg"
+                alt="Edit"
+                class="edit-icon"
+              />
+            </button>
+          </div>
         </div>
 
-        <form id="profileForm" class="profile-form">
-          <!-- Username Input -->
-          <div class="form-group">
-            <label for="usernameInput">Username</label>
-            <input
-              type="text"
-              id="usernameInput"
-              placeholder="Enter your username"
-              maxlength="13"
-              autocomplete="off"
-              required
-            />
-            <small id="usernameError" class="error-message"></small>
+        <!-- Edit Profile Section -->
+        <div class="edit-profile-section">
+          <div class="edit-profile-header">
+            <h2>Edit Profile</h2>
+            <button id="saveProfileBtn" class="save-btn">Save</button>
           </div>
 
-          <!-- Password Input -->
-          <div class="form-group">
-            <label for="passwordInput">New Password (optional)</label>
-            <input
-              type="text"
-              id="passwordInput"
-              placeholder="Leave blank to keep current password"
-              autocomplete="off"
-              class="password-field"
-            />
-            <small id="passwordError" class="error-message"></small>
-          </div>
-        </form>
-      </div>
+          <form id="profileForm" class="profile-form">
+            <!-- Username Input -->
+            <div class="form-group">
+              <label for="usernameInput">Username</label>
+              <input
+                type="text"
+                id="usernameInput"
+                placeholder="Enter your username"
+                maxlength="13"
+                autocomplete="off"
+                required
+              />
+              <small id="usernameError" class="error-message"></small>
+            </div>
 
-      <!-- Logout Button -->
-      <div class="logout-section">
-        <button id="logoutBtn" class="logout-btn">Log out</button>
-      </div>
-    </main>
+            <!-- Password Input -->
+            <div class="form-group">
+              <label for="passwordInput">New Password (optional)</label>
+              <input
+                type="text"
+                id="passwordInput"
+                placeholder="Leave blank to keep current password"
+                autocomplete="off"
+                class="password-field"
+              />
+              <small id="passwordError" class="error-message"></small>
+            </div>
+          </form>
+        </div>
 
-    <site-footer></site-footer>
+        <!-- Logout Button -->
+        <div class="logout-section">
+          <button id="logoutBtn" class="logout-btn">Log out</button>
+        </div>
+      </main>
+
+      <site-footer></site-footer>
+    </div>
 
     <script type="module" src="./src/profile.js"></script>
   </body>
