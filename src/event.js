@@ -132,19 +132,38 @@ function attachListeners() {
   document.querySelectorAll(".complete-toggle").forEach((box) => {
     box.addEventListener("change", async () => {
       const card = box.closest(".evt-card");
+      const title = card.querySelector(".evt-title").textContent;
 
-      // 1. Fade out first
-      if (card) {
-        card.classList.add("fade-out");
+      try {
+        // Set animating flag
+        isAnimating = true;
 
-        setTimeout(async () => {
-          await updateDoc(doc(db, "tasks", box.dataset.id), {
-            isCompleted: true,
-            completedAt: Date.now(),
-          });
+        // Animate card slide out to the right with space collapse
+        card.style.transform = "translateX(400px)";
+        card.style.opacity = "0";
+        card.style.marginBottom = "-100px";
 
+        await updateDoc(doc(db, "tasks", box.dataset.id), {
+          isCompleted: true,
+          completedAt: Date.now(),
+        });
+
+        // Show success notification
+        showNotification(`"${title}" completed!`);
+
+        // Reset flag after animation completes
+        setTimeout(() => {
           card.remove();
-        }, 400);
+          isAnimating = false;
+        }, 1300);
+      } catch (err) {
+        console.error("Error completing task:", err);
+        box.checked = false; // Revert checkbox on error
+        // Revert animation on error
+        card.style.transform = "translateX(0)";
+        card.style.opacity = "1";
+        card.style.marginBottom = "14px";
+        isAnimating = false;
       }
     });
   });
