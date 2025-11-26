@@ -23,36 +23,38 @@
   </head>
 
   <body class="body-bg">
-    <site-navbar></site-navbar>
+    <div class="page-wrapper">
+      <site-navbar></site-navbar>
 
-    <div class="page-form">
-      <h2 class="page-title">Event Form</h2>
+      <div class="page-form">
+        <h2 class="page-title">Event Form</h2>
 
-      <form id="addEventForm" class="task-form">
-        <label class="form-label">Event Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="eventName"
-          placeholder="e.g. Dinner with team"
-          required
-        />
+        <form id="addEventForm" class="task-form">
+          <label class="form-label">Event Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="eventName"
+            placeholder="e.g. Dinner with team"
+            required
+          />
 
-        <label class="form-label">Description</label>
-        <textarea
-          class="form-control"
-          id="eventDescription"
-          rows="4"
-          placeholder="Add details about your event..."
-        ></textarea>
+          <label class="form-label">Description</label>
+          <textarea
+            class="form-control"
+            id="eventDescription"
+            rows="4"
+            placeholder="Add details about your event..."
+          ></textarea>
 
-        <label class="form-label">Event Date</label>
-        <input type="date" class="form-control" id="eventDate" required />
+          <label class="form-label">Event Date</label>
+          <input type="date" class="form-control" id="eventDate" required />
 
-        <button type="submit" class="submit-btn">Add Event</button>
-      </form>
+          <button type="submit" class="submit-btn">Add Event</button>
+        </form>
+      </div>
+
+      <site-footer></site-footer>
     </div>
-
-    <site-footer></site-footer>
   </body>
 </html>
