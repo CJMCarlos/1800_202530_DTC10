@@ -112,10 +112,21 @@ document.addEventListener("DOMContentLoaded", () => {
 function attachListeners() {
   document.querySelectorAll(".complete-toggle").forEach((box) => {
     box.addEventListener("change", async () => {
-      await updateDoc(doc(db, "tasks", box.dataset.id), {
-        isCompleted: true,
-        completedAt: Date.now(),
-      });
+      const card = box.closest(".evt-card");
+      const title = card.querySelector(".evt-title").textContent;
+
+      try {
+        await updateDoc(doc(db, "tasks", box.dataset.id), {
+          isCompleted: true,
+          completedAt: Date.now(),
+        });
+
+        // Show success notification
+        showNotification(`"${title}" completed!`);
+      } catch (err) {
+        console.error("Error completing task:", err);
+        box.checked = false; // Revert checkbox on error
+      }
     });
   });
 
@@ -130,4 +141,35 @@ function attachListeners() {
       await deleteDoc(doc(db, "tasks", btn.dataset.delete));
     });
   });
+}
+
+// Show notification slide-in from top left
+function showNotification(message) {
+  // Create notification element if it doesn't exist
+  let notificationContainer = document.getElementById("notificationContainer");
+  if (!notificationContainer) {
+    notificationContainer = document.createElement("div");
+    notificationContainer.id = "notificationContainer";
+    document.body.appendChild(notificationContainer);
+  }
+
+  const notification = document.createElement("div");
+  notification.className = "notification";
+  notification.textContent = message;
+  notificationContainer.appendChild(notification);
+
+  // Trigger animation
+  setTimeout(() => {
+    notification.classList.add("show");
+  }, 50);
+
+  // Remove after 1.7 seconds
+  setTimeout(() => {
+    notification.classList.remove("show");
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  }, 1700);
+    }, 300);
+  }, 3000);
 }

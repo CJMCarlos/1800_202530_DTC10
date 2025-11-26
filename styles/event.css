@@ -323,3 +323,41 @@ html[data-theme="dark"] .clear-btn {
 html[data-theme="dark"] .clear-btn:hover {
   background: #3a4452;
 }
+
+#notificationContainer {
+  position: fixed;
+  top: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.notification {
+  background: #51624f;
+  color: #ffffff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-400px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  min-width: 200px;
+  text-align: center;
+}
+
+.notification.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+html[data-theme="dark"] .notification {
+  background: #3a7c7f;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
