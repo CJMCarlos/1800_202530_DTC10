@@ -3,27 +3,24 @@ import {
   collection,
   query,
   where,
-  getDocs, //onSnapshot,
+  getDocs, 
   updateDoc,
   deleteDoc,
   doc,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
-// ⛔ redirect if not logged in
+// Redirect if NOT logged in
 onAuthStateChanged(auth, (user) => {
   if (!user) {
     window.location.href = "welcome.html";
   } else {
-    // load name
     document.getElementById("name-goes-here").textContent =
       user.displayName || user.email.split("@")[0];
   }
 });
 
-// ====================
-// Greeting
-// ====================
+// Greeting section
 const greetText = ["Good Morning", "Good Afternoon", "Good Evening"];
 const hour = new Date().getHours();
 document.getElementById("greet-time").textContent =
@@ -36,9 +33,7 @@ document.getElementById("today-date").textContent =
     day: "numeric",
   });
 
-// ====================
-// Load Tasks
-// ====================
+// Load tasks
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("tasks-go-here");
   const template = document.getElementById("HomeEventPreview").content;
@@ -46,11 +41,11 @@ document.addEventListener("DOMContentLoaded", () => {
   onAuthStateChanged(auth, async (user) => {
     if (!user) return;
 
-    const tasksRef = collection(db, "tasks");
     const q = query(
-      tasksRef,
+      collection(db, "tasks"),
       where("ownerId", "==", user.uid),
-      where("isCompleted", "==", false));
+      where("isCompleted", "==", false)
+    );
 
     const snap = await getDocs(q);
     const tasks = [];
@@ -58,40 +53,28 @@ document.addEventListener("DOMContentLoaded", () => {
     snap.forEach((docSnap) => {
       const data = docSnap.data();
       let due = null;
+
       if (data.dueDate?.toDate) due = data.dueDate.toDate();
       else if (typeof data.dueDate === "string") {
         const parsed = new Date(data.dueDate);
         if (!isNaN(parsed)) due = parsed;
       }
 
-      tasks.push({
-        id: docSnap.id,
-        ...data,
-        due,
-      });
+      tasks.push({ id: docSnap.id, ...data, due });
     });
 
-    tasks.sort((a, b) => {
-      if (!a.due) return 1;
-      if (!b.due) return -1;
-      return a.due - b.due;
-    });
-
+    tasks.sort((a, b) => (!a.due ? 1 : !b.due ? -1 : a.due - b.due));
     const top5 = tasks.slice(0, 5);
-    container.innerHTML = "";
 
+    container.innerHTML = "";
     top5.forEach((task) => {
       const card = template.cloneNode(true);
+
       card.querySelector(".evt-title").textContent = task.title;
       card.querySelector(".evt-desc").textContent = task.description || "";
       card.querySelector(".evt-date").textContent = task.due
         ? task.due.toISOString().split("T")[0]
         : "";
-
-      if (task.isCompleted) {
-        card.querySelector(".evt-title").classList.add("is-done");
-        card.querySelector(".complete-toggle").checked = true;
-      }
 
       card.querySelector(".complete-toggle").dataset.id = task.id;
       card.querySelector(".edit-btn").dataset.edit = task.id;
@@ -105,24 +88,48 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function attachHomeListeners() {
+  /* ------------------------
+        COMPLETE TASK
+  -------------------------- */
   document.querySelectorAll(".complete-toggle").forEach((box) => {
     box.addEventListener("change", async () => {
-      await updateDoc(doc(db, "tasks", box.dataset.id), {
-        isCompleted: true,
-        completedAt: Date.now(),
-      });
+      const card = box.closest(".evt-card");
+
+      card.classList.add("fade-out");
+
+      setTimeout(async () => {
+        await updateDoc(doc(db, "tasks", box.dataset.id), {
+          isCompleted: true,
+          completedAt: Date.now(),
+        });
+
+        card.remove();
+      }, 400);
     });
   });
 
+  /* ------------------------
+         DELETE TASK
+  -------------------------- */
+  document.querySelectorAll(".delete-btn").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const card = btn.closest(".evt-card");
+
+      card.classList.add("fade-out");
+
+      setTimeout(async () => {
+        await deleteDoc(doc(db, "tasks", btn.dataset.delete));
+        card.remove();
+      }, 400);
+    });
+  });
+
+  /* ------------------------
+           EDIT TASK
+  -------------------------- */
   document.querySelectorAll(".edit-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       window.location.href = `add-event.html?id=${btn.dataset.edit}`;
-    });
-  });
-
-  document.querySelectorAll(".delete-btn").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      await deleteDoc(doc(db, "tasks", btn.dataset.delete));
     });
   });
 }

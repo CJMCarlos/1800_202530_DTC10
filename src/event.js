@@ -112,10 +112,21 @@ document.addEventListener("DOMContentLoaded", () => {
 function attachListeners() {
   document.querySelectorAll(".complete-toggle").forEach((box) => {
     box.addEventListener("change", async () => {
-      await updateDoc(doc(db, "tasks", box.dataset.id), {
-        isCompleted: true,
-        completedAt: Date.now(),
-      });
+      const card = box.closest(".evt-card");
+
+      // 1. Fade out first
+      if (card) {
+        card.classList.add("fade-out");
+
+        setTimeout(async () => {
+          await updateDoc(doc(db, "tasks", box.dataset.id), {
+            isCompleted: true,
+            completedAt: Date.now(),
+          });
+
+          card.remove();
+        }, 400);
+      }
     });
   });
 

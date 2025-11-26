@@ -22,68 +22,70 @@
   </head>
 
   <body class="body-bg">
-    <site-navbar></site-navbar>
+    <div class="page-wrapper">
+      <site-navbar></site-navbar>
 
-    <main class="page-container">
-      <!-- Header -->
-      <div class="event-header">
-        <h3 class="page-title">My Events</h3>
-        <button class="add-btn" id="addEventBtn">+ Add</button>
-      </div>
-
-      <!-- Search Bar -->
-      <div class="event-search">
-        <div class="search-wrapper">
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="🔍 Search events..."
-            autocomplete="off"
-          />
-          <button id="clearSearch" class="clear-btn">✕</button>
+      <main class="page-container">
+        <!-- Header -->
+        <div class="event-header">
+          <h3 class="page-title">My Events</h3>
+          <button class="add-btn" id="addEventBtn">+ Add</button>
         </div>
-      </div>
 
-      <!-- Task List Container -->
-      <div id="eventList"></div>
-      <template id="EventCard">
-        <div class="evt-card">
-          <div class="evt-top">
-            <div class="evt-left">
-              <!-- Checkbox -->
-              <label class="evt-check">
-                <input type="checkbox" class="complete-toggle" />
-                <svg class="check-icon" viewBox="0 0 24 24">
-                  <path
-                    d="M20 6L9 17l-5-5"
-                    stroke="white"
-                    stroke-width="3"
-                    fill="none"
-                  />
-                </svg>
-              </label>
+        <!-- Search Bar -->
+        <div class="event-search">
+          <div class="search-wrapper">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="🔍 Search events..."
+              autocomplete="off"
+            />
+            <button id="clearSearch" class="clear-btn">✕</button>
+          </div>
+        </div>
 
-              <!-- Info -->
-              <div class="evt-info">
-                <div class="evt-row">
-                  <h5 class="evt-title"></h5>
-                  <small class="evt-date"></small>
+        <!-- Task List Container -->
+        <div id="eventList"></div>
+        <template id="EventCard">
+          <div class="evt-card">
+            <div class="evt-top">
+              <div class="evt-left">
+                <!-- Checkbox -->
+                <label class="evt-check">
+                  <input type="checkbox" class="complete-toggle" />
+                  <svg class="check-icon" viewBox="0 0 24 24">
+                    <path
+                      d="M20 6L9 17l-5-5"
+                      stroke="white"
+                      stroke-width="3"
+                      fill="none"
+                    />
+                  </svg>
+                </label>
+
+                <!-- Info -->
+                <div class="evt-info">
+                  <div class="evt-row">
+                    <h5 class="evt-title"></h5>
+                    <small class="evt-date"></small>
+                  </div>
+                  <p class="evt-desc"></p>
                 </div>
-                <p class="evt-desc"></p>
               </div>
             </div>
-          </div>
 
-          <!-- Buttons -->
-          <div class="evt-actions">
-            <button class="evt-btn edit-btn">Edit</button>
-            <button class="evt-btn evt-btn-danger delete-btn">Delete</button>
+            <!-- Buttons -->
+            <div class="evt-actions">
+              <button class="evt-btn edit-btn">Edit</button>
+              <button class="evt-btn evt-btn-danger delete-btn">Delete</button>
+            </div>
           </div>
-        </div>
-      </template>
-    </main>
+        </template>
+      </main>
 
-    <site-footer></site-footer>
+      <site-footer></site-footer>
+    </div>
 
     <script type="module" src="/src/event.js"></script>
   </body>
