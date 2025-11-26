@@ -133,3 +133,32 @@ function attachHomeListeners() {
     });
   });
 }
+
+// show notification slide-in from top
+function showNotification(message) {
+  // create notification element if it doesn't exist
+  let notificationContainer = document.getElementById("notificationContainer");
+  if (!notificationContainer) {
+    notificationContainer = document.createElement("div");
+    notificationContainer.id = "notificationContainer";
+    document.body.appendChild(notificationContainer);
+  }
+
+  const notification = document.createElement("div");
+  notification.className = "notification";
+  notification.textContent = message;
+  notificationContainer.appendChild(notification);
+
+  // animation
+  setTimeout(() => {
+    notification.classList.add("show");
+  }, 50);
+
+  // remove after 1.7 seconds
+  setTimeout(() => {
+    notification.classList.remove("show");
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  }, 1700);
+}

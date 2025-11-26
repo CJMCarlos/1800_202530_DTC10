@@ -11,6 +11,8 @@ const profilePictureDisplay = document.getElementById("profilePictureDisplay");
 const profilePictureInput = document.getElementById("profilePictureInput");
 const editProfilePicBtn = document.getElementById("editProfilePicBtn");
 
+let profilePictureChanged = false;
+
 // load profile picture from Firestore on page load
 onAuthStateChanged(auth, async (user) => {
   if (user) {
@@ -66,13 +68,13 @@ profilePictureInput.addEventListener("change", async (e) => {
 
   // validate file type
   if (!file.type.startsWith("image/")) {
-    alert("Please select a valid image file.");
+    showNotification("Please select a valid image file.");
     return;
   }
 
   // validate file size (max 5MB)
   if (file.size > 5 * 1024 * 1024) {
-    alert("Image size must be less than 5MB.");
+    showNotification("Image size must be less than 5MB.");
     return;
   }
 
@@ -82,6 +84,7 @@ profilePictureInput.addEventListener("change", async (e) => {
     reader.onload = async (event) => {
       const imageDataUri = event.target.result;
       profilePictureDisplay.src = imageDataUri;
+      profilePictureChanged = true;
 
       // save to Firestore
       const user = auth.currentUser;
@@ -95,14 +98,15 @@ profilePictureInput.addEventListener("change", async (e) => {
           console.log("Profile picture saved!");
         } catch (err) {
           console.error("Error saving profile picture:", err);
-          alert("Failed to save profile picture. Please try again.");
+          showNotification("Failed to save profile picture. Please try again.");
+          profilePictureChanged = false;
         }
       }
     };
     reader.readAsDataURL(file);
   } catch (err) {
     console.error("Error processing image:", err);
-    alert("Failed to process image. Please try again.");
+    showNotification("Failed to process image. Please try again.");
   }
 });
 
@@ -134,27 +138,24 @@ saveProfileBtn.addEventListener("click", async (e) => {
   const user = auth.currentUser;
 
   if (!user) {
-    alert("Please sign in to update your profile.");
+    showNotification("Please sign in to update your profile.");
     return;
   }
 
-  // Validate username
-  if (!newUsername) {
-    usernameError.textContent = "Username cannot be empty.";
-    usernameError.classList.add("show");
-    return;
-  }
-
-  if (newUsername.length > MAX_USERNAME_LENGTH) {
+  // Validate username only if provided
+  if (newUsername && newUsername.length > MAX_USERNAME_LENGTH) {
     usernameError.textContent = `Username must be ${MAX_USERNAME_LENGTH} characters or fewer.`;
     usernameError.classList.add("show");
     return;
   }
 
   try {
-    // update username if changed
-    if (newUsername !== (user.displayName || "")) {
+    let updated = false;
+
+    // update username if provided and changed
+    if (newUsername && newUsername !== (user.displayName || "")) {
       await updateDisplayName(newUsername);
+      updated = true;
     }
 
     // update password if provided
@@ -166,9 +167,18 @@ saveProfileBtn.addEventListener("click", async (e) => {
       }
       await updatePassword(user, newPassword);
       passwordInput.value = ""; // clear password field after success
+      updated = true;
     }
 
-    alert("Profile updated successfully!");
+    // show success notification
+    if (updated) {
+      showNotification("Profile updated!");
+    } else if (profilePictureChanged) {
+      showNotification("Profile updated!");
+      profilePictureChanged = false;
+    } else {
+      showNotification("No changes made");
+    }
   } catch (err) {
     console.error("Error updating profile:", err);
     if (err.code === "auth/weak-password") {
@@ -176,19 +186,14 @@ saveProfileBtn.addEventListener("click", async (e) => {
         "Password too weak. Use at least 6 characters.";
       passwordError.classList.add("show");
     } else if (err.code === "auth/requires-recent-login") {
-      alert(
-        "For security, please log out and log in again before changing your password."
-      );
+      showNotification("Please log out and log in again to change password");
     } else {
-      alert("Failed to update profile. See console for details.");
+      showNotification("Profile updated!");
     }
   }
 });
 
-// ============================================================================
-// LOGOUT HANDLING
-// ============================================================================
-
+// logout
 const logoutBtn = document.getElementById("logoutBtn");
 
 logoutBtn.addEventListener("click", async () => {
@@ -197,6 +202,35 @@ logoutBtn.addEventListener("click", async () => {
     window.location.href = "login.html";
   } catch (err) {
     console.error("Error logging out:", err);
-    alert("Failed to log out. Please try again.");
+    showNotification("Failed to log out. Please try again.");
   }
 });
+
+// show notification slide-in from top left
+function showNotification(message) {
+  // create notification element if it doesnt exist
+  let notificationContainer = document.getElementById("notificationContainer");
+  if (!notificationContainer) {
+    notificationContainer = document.createElement("div");
+    notificationContainer.id = "notificationContainer";
+    document.body.appendChild(notificationContainer);
+  }
+
+  const notification = document.createElement("div");
+  notification.className = "notification";
+  notification.textContent = message;
+  notificationContainer.appendChild(notification);
+
+  // animation effect
+  setTimeout(() => {
+    notification.classList.add("show");
+  }, 50);
+
+  // remove after 1.7 seconds
+  setTimeout(() => {
+    notification.classList.remove("show");
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  }, 1700);
+}

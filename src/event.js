@@ -11,6 +11,9 @@ import {
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
+let animationTimeout = null;
+let isAnimating = false;
+
 document.addEventListener("DOMContentLoaded", () => {
   const addEventBtn = document.getElementById("addEventBtn");
   const eventList = document.getElementById("eventList");
@@ -36,14 +39,30 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     let allTasks = [];
+    let hasInitialLoad = false;
 
     onSnapshot(q, (snap) => {
-      allTasks = snap.docs.map((d) => ({
+      const newTasks = snap.docs.map((d) => ({
         id: d.id,
         ...d.data(),
       }));
 
-      renderTasks(allTasks);
+      // only delay if animation is currently happening
+      if (isAnimating && hasInitialLoad) {
+        if (animationTimeout) {
+          clearTimeout(animationTimeout);
+        }
+        animationTimeout = setTimeout(() => {
+          allTasks = newTasks;
+          renderTasks(allTasks);
+          animationTimeout = null;
+        }, 1300); // wait for animation to complete
+      } else {
+        // load immediately on first load and when no animation
+        allTasks = newTasks;
+        renderTasks(allTasks);
+        hasInitialLoad = true;
+      }
     });
 
     function renderTasks(list) {
@@ -138,7 +157,60 @@ function attachListeners() {
 
   document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", async () => {
-      await deleteDoc(doc(db, "tasks", btn.dataset.delete));
+      const card = btn.closest(".evt-card");
+      const title = card.querySelector(".evt-title").textContent;
+
+      try {
+        // Set animating flag
+        isAnimating = true;
+
+        // Fade out the card
+        card.style.opacity = "0";
+        card.style.marginBottom = "-100px";
+
+        await deleteDoc(doc(db, "tasks", btn.dataset.delete));
+        showNotification(`"${title}" deleted!`);
+
+        // Reset flag after animation completes
+        setTimeout(() => {
+          isAnimating = false;
+        }, 1300);
+      } catch (err) {
+        console.error("Error deleting task:", err);
+        showNotification("Failed to delete task");
+        // Revert animation on error
+        card.style.opacity = "1";
+        isAnimating = false;
+      }
     });
   });
+}
+
+// Show notification slide-in from top left
+function showNotification(message) {
+  // Create notification element if it doesn't exist
+  let notificationContainer = document.getElementById("notificationContainer");
+  if (!notificationContainer) {
+    notificationContainer = document.createElement("div");
+    notificationContainer.id = "notificationContainer";
+    document.body.appendChild(notificationContainer);
+  }
+
+  const notification = document.createElement("div");
+  notification.className = "notification";
+  notification.textContent = message;
+  notificationContainer.appendChild(notification);
+
+  // Trigger animation
+  setTimeout(() => {
+    notification.classList.add("show");
+  }, 50);
+
+  // Remove after 1.7 seconds
+  setTimeout(() => {
+    notification.classList.remove("show");
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  }, 1700);
 }
