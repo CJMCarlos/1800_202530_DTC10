@@ -24,7 +24,6 @@
   max-width: 700px;
   margin: 0 auto;
   width: 100%;
-  margin-top: -10px;
 }
 
 .add-btn {
@@ -124,7 +123,7 @@
 }
 
 .evt-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #2f2f2f;
   margin-top: 8px;
@@ -143,10 +142,9 @@
 
 .evt-desc {
   min-height: 15px;
-  font-size: 14px;
+  font-size: 13px;
   color: #6d6d6d;
   line-height: 1.4;
-  max-width: 75%;
 }
 
 .evt-actions {
@@ -167,7 +165,6 @@
   color: #3e3e3e;
   cursor: pointer;
   transition: 0.15s ease;
-  margin-top: 5px;
 }
 
 .evt-btn:hover {

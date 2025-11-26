@@ -138,7 +138,7 @@ function attachListeners() {
         // Set animating flag
         isAnimating = true;
 
-        // Animate card slide out to the right with space collapse
+        // Animate card slide out to the right
         card.style.transform = "translateX(400px)";
         card.style.opacity = "0";
         card.style.marginBottom = "-100px";
@@ -153,7 +153,6 @@ function attachListeners() {
 
         // Reset flag after animation completes
         setTimeout(() => {
-          card.remove();
           isAnimating = false;
         }, 1300);
       } catch (err) {
@@ -162,7 +161,6 @@ function attachListeners() {
         // Revert animation on error
         card.style.transform = "translateX(0)";
         card.style.opacity = "1";
-        card.style.marginBottom = "14px";
         isAnimating = false;
       }
     });
