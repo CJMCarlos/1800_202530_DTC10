@@ -10,6 +10,8 @@ import {
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
+let isAnimating = false;
+
 // ⛔ redirect if not logged in
 onAuthStateChanged(auth, (user) => {
   if (!user) {
@@ -50,7 +52,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const q = query(
       tasksRef,
       where("ownerId", "==", user.uid),
-      where("isCompleted", "==", false));
+      where("isCompleted", "==", false)
+    );
 
     const snap = await getDocs(q);
     const tasks = [];
@@ -107,10 +110,26 @@ document.addEventListener("DOMContentLoaded", () => {
 function attachHomeListeners() {
   document.querySelectorAll(".complete-toggle").forEach((box) => {
     box.addEventListener("change", async () => {
-      await updateDoc(doc(db, "tasks", box.dataset.id), {
-        isCompleted: true,
-        completedAt: Date.now(),
-      });
+      const card = box.closest(".evt-card");
+      const title = card.querySelector(".evt-title").textContent;
+
+      try {
+        // show notification immediately
+        showNotification(`"${title}" completed!`);
+
+        // remove card immediately (no animation)
+        card.remove();
+
+        await updateDoc(doc(db, "tasks", box.dataset.id), {
+          isCompleted: true,
+          completedAt: Date.now(),
+        });
+      } catch (err) {
+        console.error("Error completing task:", err);
+        box.checked = false; // revert checkbox on error
+        // re-add card if it was removed
+        location.reload();
+      }
     });
   });
 
@@ -122,7 +141,52 @@ function attachHomeListeners() {
 
   document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", async () => {
-      await deleteDoc(doc(db, "tasks", btn.dataset.delete));
+      const card = btn.closest(".evt-card");
+      const title = card.querySelector(".evt-title").textContent;
+
+      try {
+        // show notification immediately
+        showNotification(`"${title}" deleted!`);
+
+        // remove card immediately (no animation)
+        card.remove();
+
+        await deleteDoc(doc(db, "tasks", btn.dataset.delete));
+      } catch (err) {
+        console.error("Error deleting task:", err);
+        showNotification("Failed to delete task");
+        // re-add card if it was removed
+        location.reload();
+      }
     });
   });
+}
+
+// show notification slide-in from top
+function showNotification(message) {
+  // create notification element if it doesn't exist
+  let notificationContainer = document.getElementById("notificationContainer");
+  if (!notificationContainer) {
+    notificationContainer = document.createElement("div");
+    notificationContainer.id = "notificationContainer";
+    document.body.appendChild(notificationContainer);
+  }
+
+  const notification = document.createElement("div");
+  notification.className = "notification";
+  notification.textContent = message;
+  notificationContainer.appendChild(notification);
+
+  // animation
+  setTimeout(() => {
+    notification.classList.add("show");
+  }, 50);
+
+  // remove after 1.7 seconds
+  setTimeout(() => {
+    notification.classList.remove("show");
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  }, 1700);
 }
