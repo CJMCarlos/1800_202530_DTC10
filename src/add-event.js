@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const snap = await getDoc(docRef);
 
     if (!snap.exists()) {
-      alert("Task not found!");
+      showNotification("Task not found!");
       return;
     }
 
@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (isEditMode) {
         // Update existing task
         await updateDoc(doc(db, "tasks", taskId), data);
+        showNotification("Task updated successfully!");
       } else {
         // Create new task
         await addDoc(collection(db, "tasks"), {
@@ -65,12 +66,44 @@ document.addEventListener("DOMContentLoaded", async () => {
           isCompleted: false,
           createdAt: serverTimestamp(),
         });
+        showNotification("Task created successfully!");
       }
 
-      window.location.href = "event.html";
+      setTimeout(() => {
+        window.location.href = "event.html";
+      }, 1000);
     } catch (err) {
       console.error(err);
-      alert("Error saving task.");
+      showNotification("Error saving task.");
     }
   });
 });
+
+// Show notification slide-in from top
+function showNotification(message) {
+  // Create notification element if it doesn't exist
+  let notificationContainer = document.getElementById("notificationContainer");
+  if (!notificationContainer) {
+    notificationContainer = document.createElement("div");
+    notificationContainer.id = "notificationContainer";
+    document.body.appendChild(notificationContainer);
+  }
+
+  const notification = document.createElement("div");
+  notification.className = "notification";
+  notification.textContent = message;
+  notificationContainer.appendChild(notification);
+
+  // Trigger animation
+  setTimeout(() => {
+    notification.classList.add("show");
+  }, 50);
+
+  // Remove after 1.7 seconds
+  setTimeout(() => {
+    notification.classList.remove("show");
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  }, 1700);
+}
