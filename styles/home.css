@@ -22,7 +22,8 @@
   border-radius: 18px;
   border: 1px solid #eceae6;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-  margin-top: -10px;
+  margin-top: -13px;
+  transform: translateY(-15px);
 }
 
 .greet-combined {
@@ -71,6 +72,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transform: translateY(-16px);
 }
 
 .section-header h2 {
@@ -103,6 +105,7 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
+  transform: translateY(-14px);
 }
 
 .evt-card {
@@ -112,14 +115,11 @@
   padding: 15px 20px 10px;
   border: 1px solid #f1f1ee;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  transition: 0.15s ease, transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    max-height 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    padding 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: 0.15s ease;
   box-sizing: border-box;
   width: 100%;
-  overflow: hidden;
-  max-height: 500px;
+  overflow: visible;
+  max-height: none;
 }
 
 .evt-card:hover {
@@ -210,7 +210,9 @@
   min-height: 15px;
   font-size: 15px;
   color: #6d6d6d;
-  max-width: 75%;
+  max-width: 65%;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .evt-actions {
