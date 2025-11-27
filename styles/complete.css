@@ -6,7 +6,7 @@
   color: #2f2f2f;
 }
 
-/* Title */
+/* TITLE */
 .completed-title {
   text-align: center;
   font-size: 26px;
@@ -22,7 +22,7 @@
   margin-bottom: 22px;
 }
 
-/* Empty state */
+/* EMPTY STATE */
 .empty {
   text-align: center;
   color: #6d6d6d;

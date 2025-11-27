@@ -10,6 +10,22 @@
     <script type="module" src="./src/components/site-navbar.js"></script>
     <script type="module" src="./src/components/site-footer.js"></script>
 
+    <!-- Theme Checker -->
+    <script>
+      (function () {
+        try {
+          const saved = localStorage.getItem('theme');
+          const theme =
+            saved === 'dark' || saved === 'light'
+              ? saved
+              : 'dark'; // default theme if nothing saved
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+
     <!-- Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"

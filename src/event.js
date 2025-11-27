@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* -----------------
-       SEARCH + CLEAR
+      SEARCH + CLEAR
     ------------------- */
     const searchInput = document.getElementById("searchInput");
     const clearBtn = document.getElementById("clearSearch");
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* -----------------------------
-   EVENT LISTENERS
+  EVENT LISTENERS
 ------------------------------ */
 function attachListeners() {
   document.querySelectorAll(".complete-toggle").forEach((box) => {

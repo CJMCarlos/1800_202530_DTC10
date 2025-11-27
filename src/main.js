@@ -20,7 +20,9 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// Greeting section
+//------------------------
+// GREETING SECTION
+// -----------------------
 const greetText = ["Good Morning", "Good Afternoon", "Good Evening"];
 const hour = new Date().getHours();
 document.getElementById("greet-time").textContent =
@@ -33,7 +35,9 @@ document.getElementById("today-date").textContent =
     day: "numeric",
   });
 
-// Load tasks
+//------------------------
+// LOAD TASKS
+// -----------------------
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("tasks-go-here");
   const template = document.getElementById("HomeEventPreview").content;
@@ -88,9 +92,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function attachHomeListeners() {
-  /* ------------------------
-        COMPLETE TASK
-  -------------------------- */
+//------------------------
+// COMPLETE TASK
+// -----------------------
   document.querySelectorAll(".complete-toggle").forEach((box) => {
     box.addEventListener("change", async () => {
       const card = box.closest(".evt-card");
@@ -108,9 +112,10 @@ function attachHomeListeners() {
     });
   });
 
-  /* ------------------------
-         DELETE TASK
-  -------------------------- */
+//------------------------
+// DELETE TASK
+// -----------------------
+
   document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", async () => {
       const card = btn.closest(".evt-card");
@@ -124,9 +129,9 @@ function attachHomeListeners() {
     });
   });
 
-  /* ------------------------
-           EDIT TASK
-  -------------------------- */
+//------------------------
+// EDIT TASK
+// -----------------------
   document.querySelectorAll(".edit-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       window.location.href = `add-event.html?id=${btn.dataset.edit}`;
