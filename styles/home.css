@@ -300,6 +300,114 @@
   gap: 8px;
 }
 
+/* LIGHT MODE */
+
+html[data-theme="light"] .home-container {
+  color: #2f2f2f;
+}
+
+html[data-theme="light"] .greet-card {
+  background: linear-gradient(
+    to right,
+    #ffffff 0%,
+    #ffffff 55%,
+    rgba(245, 243, 237, 0.6) 80%,
+    rgba(245, 243, 237, 0.2) 100%
+  );
+  border: 1px solid #eceae6;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="light"] .greet-combined {
+  color: #51624f;
+}
+
+html[data-theme="light"] .greet-combined #greet-time {
+  color: #51624f;
+}
+
+html[data-theme="light"] .greet-date {
+  font-size: 20px;
+  color: #777;
+}
+
+html[data-theme="light"] .section-header h2 {
+  color: #3d3d3d;
+}
+
+html[data-theme="light"] .view-all-btn,
+html[data-theme="light"] .edit-btn {
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #cdd1ca;
+  color: #54645a;
+  background: #f7f8f6;
+}
+
+html[data-theme="light"] .events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+html[data-theme="light"] .evt-card {
+  background: #ffffff;
+  border: 1px solid #f1f1ee;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+html[data-theme="light"] .evt-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="light"] .evt-check {
+  border: 2px solid #cdd3cf;
+}
+
+html[data-theme="light"] .evt-check:has(input:checked) {
+  background: #a8b4ad;
+  border-color: #8e9b94;
+}
+
+html[data-theme="light"] .evt-title {
+  color: #2f2f2f;
+}
+
+html[data-theme="light"] .evt-date {
+  color: #848484;
+}
+
+html[data-theme="light"] .evt-desc {
+  color: #6d6d6d;
+}
+
+html[data-theme="light"] .evt-btn {
+  background: #eef0ee;
+  border: 1px solid #d4d6d3;
+  color: #3e3e3e;
+}
+
+html[data-theme="light"] .evt-btn:hover {
+  background: #e3e5e3;
+}
+
+html[data-theme="light"] .evt-btn-danger {
+  background: #f2f2f2;
+  border-color: #d6d7d5;
+}
+
+html[data-theme="light"] .evt-btn-danger:hover {
+  background: #e8e8e8;
+}
+
+html[data-theme="light"] .inline-editor .editor-input {
+  color: #2f2f2f;
+  border-bottom: 2px solid #51624f;
+}
+
+/* BATMAN MODE */
+
 html[data-theme="dark"] .home-container {
   color: #e8eaed;
 }

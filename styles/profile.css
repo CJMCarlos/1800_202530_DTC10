@@ -227,6 +227,94 @@
   }
 }
 
+/* LIGHT MODE */
+
+html[data-theme="light"] .profile-container {
+  color: #2f2f2f;
+}
+
+html[data-theme="light"] .profile-picture {
+  background: #f0f0f0;
+  border: 3px solid #f5f3ed;
+}
+
+html[data-theme="light"] .edit-profile-pic-btn {
+  background: #f5f3ed;
+  border: 3px solid #f5f3ed;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+html[data-theme="light"] .edit-icon {
+  stroke: #ffffff;
+  fill: none;
+}
+
+html[data-theme="light"] .edit-profile-section {
+  background: linear-gradient(
+    to right,
+    #ffffff 0%,
+    #ffffff 55%,
+    rgba(245, 243, 237, 0.6) 80%,
+    rgba(245, 243, 237, 0.2) 100%
+  );
+  border: 1px solid #eceae6;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="light"] .edit-profile-header h2 {
+  color: #51624f;
+}
+
+html[data-theme="light"] .save-btn {
+  border: 1px solid #cdd1ca;
+  color: #54645a;
+  background: #f7f8f6;
+}
+
+html[data-theme="light"] .save-btn:hover {
+  background: #eef0ee;
+  border-color: #b8bfb3;
+}
+
+html[data-theme="light"] .form-group label {
+  color: #2f2f2f;
+}
+
+html[data-theme="light"] .form-group input {
+  background: #ffffff;
+  border: 1px solid #d4d6d3;
+  color: #2f2f2f;
+}
+
+html[data-theme="light"] .form-group input:focus {
+  border-color: #51624f;
+  box-shadow: 0 0 0 3px rgba(81, 98, 79, 0.1);
+}
+
+html[data-theme="light"] .form-group input::placeholder {
+  color: #aaa;
+}
+
+html[data-theme="light"] .logout-btn {
+  border: 2px solid #d32f2f;
+  background: transparent;
+  color: #d32f2f;
+}
+
+html[data-theme="light"] .logout-btn:hover {
+  background: #ffebee;
+}
+
+html[data-theme="light"] .notification {
+  background: #51624f;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+
+/* BATMAN MODE */
+
 html[data-theme="dark"] .profile-container {
   color: #e8eaed;
 }

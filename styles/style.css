@@ -29,7 +29,7 @@ body {
   margin-top: -30px;
 }
 
-/* Hamburger Menu */
+/* HAMBURGER MENU */
 .topnav-links {
   display: none;
   position: absolute;
@@ -44,7 +44,7 @@ body {
   z-index: 1000;
   width: max-content;
 }
-/* Hamburger Menu Text */
+/* HAMBURGER MENU TEXT */
 .topnav-links a {
   text-align: center;
   text-decoration: none;
@@ -62,7 +62,7 @@ body {
   border-color: #b8bfb3;
 }
 
-/* Show which page is active */
+/* SHOWS WHICH PAGE IS ACTIVE */
 .topnav-links a.active {
   background: #d4d9d2;
   font-weight: 600;
@@ -78,7 +78,7 @@ body {
   right: 20px;
 }
 
-/* Theme toggle button */
+/* THEME TOGGLE BUTTON */
 .theme-toggle {
   display: flex;
   align-items: center;
@@ -99,7 +99,7 @@ body {
   border-color: #b8bfb3;
 }
 
-/* === Minimal Calm Navbar === */
+/* MINIMAL CALM NAVBAR */
 .minimal-footer {
   position: fixed;
   bottom: 0;
@@ -170,7 +170,7 @@ body {
   fill: #2f2f2f;
 }
 
-/* ---------- Page container ---------- */
+/* PAGE CONTAINER */
 .page-container {
   display: flex;
   flex-direction: column;
@@ -178,7 +178,7 @@ body {
   overflow: hidden;
 }
 
-/* ---------- Title ---------- */
+/* TITLE */
 .page-title {
   text-align: center;
   font-size: 26px;
@@ -187,13 +187,13 @@ body {
   margin: 16px 0 20px 0;
 }
 
-/* ---------- Form Container ---------- */
+/* FORM CONTAINER */
 .page-form {
   padding: 0 24px;
   margin-top: -20px;
 }
 
-/* ---------- Form ---------- */
+/* FORM */
 .task-form {
   background: #ffffff;
   padding: 28px 24px;
@@ -207,14 +207,14 @@ body {
   gap: 18px;
 }
 
-/* Label */
+/* LABEL */
 .task-form .form-label {
   font-size: 18px;
   color: #5f5f5f;
   font-weight: 500;
 }
 
-/* Input & Textarea */
+/* INPUT AND TEXT AREA */
 .task-form .form-control {
   background: #fafafa;
   border: 1px solid #e1e1dd;
@@ -234,7 +234,7 @@ body {
   color: #b2b2b2;
 }
 
-/* Submit button */
+/* SUBMIT BUTTON */
 .submit-btn {
   background: #d4d9d2;
   border: none;
@@ -286,6 +286,143 @@ body {
   height: 32px;
   stroke-width: 2.2px;
 }
+
+/* LIGHT MODE */
+
+html[data-theme="light"] body {
+  background: #f5f3ed;
+  color: #2f2f2f;
+}
+
+html[data-theme="light"] .navbar {
+  background: #f5f3ed;
+}
+
+html[data-theme="light"] .topnav-links {
+  background: #f5f3ed;
+}
+
+html[data-theme="light"] .topnav-links a {
+  color: #2f2f2f;
+  border: 1px solid #d4d6d3;
+  background: #ffffff;
+}
+
+html[data-theme="light"] .topnav-links a:hover {
+  background: #e5e7e2;
+  border-color: #b8bfb3;
+}
+
+html[data-theme="light"] .topnav-links a.active {
+  background: #d4d9d2;
+  border-color: #b8bfb3;
+  color: #2f2f2f;
+}
+
+html[data-theme="light"] .icon {
+  background-color: #f5f3ed;
+  color: #2f2f2f;
+}
+
+html[data-theme="light"] .theme-toggle {
+  border: 1px solid #d4d6d3;
+  color: #2f2f2f;
+  background: transparent;
+}
+
+html[data-theme="light"] .theme-toggle:hover {
+  background: #e5e7e2;
+  border-color: #b8bfb3;
+}
+
+html[data-theme="light"] .task-form {
+  background: #ffffff;
+  border: 1px solid #ecece7;
+  box-shadow: 0px 6px 22px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="light"] .task-form .form-label {
+  color: #5f5f5f;
+}
+
+html[data-theme="light"] .task-form .form-control {
+  background: #fafafa;
+  border: 1px solid #e1e1dd;
+  color: #2f2f2f;
+}
+
+html[data-theme="light"] .task-form .form-control:focus {
+  border-color: #c6cbc4;
+  box-shadow: 0 0 0 3px rgba(200, 205, 198, 0.25);
+}
+
+html[data-theme="light"] .task-form .form-control::placeholder {
+  color: #b2b2b2;
+}
+
+html[data-theme="light"] .submit-btn {
+  background: #d4d9d2;
+  color: #2f2f2f;
+}
+
+html[data-theme="light"] .submit-btn:hover {
+  background: #c7ccc5;
+}
+
+html[data-theme="light"] .submit-btn:active {
+  background: #babfb8;
+}
+
+html[data-theme="light"] .page-title {
+  color: #2f2f2f;
+}
+
+html[data-theme="light"] .footer-nav {
+  background: #ffffff;
+  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="light"] .nav-btn {
+  color: #3f3f3f;
+}
+
+html[data-theme="light"] .nav-btn svg {
+  stroke: #3f3f3f;
+}
+
+html[data-theme="light"] .nav-icon-box {
+  background: #f5f5f3;
+}
+
+html[data-theme="light"] .nav-btn:hover .nav-icon-box {
+  background: #e5e7e2;
+}
+
+html[data-theme="light"] .nav-btn.active .nav-icon-box {
+  background: #d4d9d2;
+  border: 2px solid #c2c7bf;
+}
+
+html[data-theme="light"] .fab {
+  background: #d4d9d2;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);
+}
+
+html[data-theme="light"] .fab:hover {
+  background: #c6cbc4;
+}
+
+html[data-theme="light"] .fab svg {
+  stroke: #2f2f2f;
+  fill: #2f2f2f;
+}
+
+html[data-theme="light"] .notification {
+  background: #51624f;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
 
 /* BATMAN MODE */
 
