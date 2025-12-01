@@ -8,10 +8,17 @@ body {
   overflow-x: hidden;
 }
 .page-wrapper {
-  max-width: 700px;
+  max-width: 100%;
   margin: 0 auto;
   width: 100%;
   position: relative;
+}
+
+@media (max-width: 640px) {
+  .page-wrapper {
+    max-width: 480px;
+    margin: 0 auto;
+  }
 }
 
 .navbar-logo {
@@ -108,6 +115,35 @@ body {
   background: transparent;
   z-index: 999;
 }
+
+@media (max-width: 430px) {
+  .nav-icon-box {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 10px !important;
+  }
+
+  .nav-icon-box svg {
+    width: 15px !important;
+    height: 15px !important;
+  }
+
+  .nav-btn span {
+    font-size: 11px;
+  }
+
+  .footer-nav {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .fab {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 10px !important;
+  }
+}
+
 
 /* NAV BAR */
 .footer-nav {
@@ -422,7 +458,6 @@ html[data-theme="light"] .notification {
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
-
 
 /* BATMAN MODE */
 

@@ -1,7 +1,14 @@
 .body-bg {
-  max-width: 700px;
+  max-width: 100%;
   margin: 0 auto;
   width: 100%;
+}
+
+@media (max-width: 640px) {
+  .body-bg {
+    max-width: 480px;
+    margin: 0 auto;
+  }
 }
 
 .profile-container {
@@ -310,8 +317,6 @@ html[data-theme="light"] .notification {
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
-
-
 
 /* BATMAN MODE */
 
