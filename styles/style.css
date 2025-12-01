@@ -118,14 +118,14 @@ body {
 
 @media (max-width: 430px) {
   .nav-icon-box {
-    width: 40px !important;
-    height: 40px !important;
+    width: 45px !important;
+    height: 45px !important;
     border-radius: 10px !important;
   }
 
   .nav-icon-box svg {
-    width: 15px !important;
-    height: 15px !important;
+    width: 25px !important;
+    height: 25px !important;
   }
 
   .nav-btn span {
@@ -143,7 +143,6 @@ body {
     border-radius: 10px !important;
   }
 }
-
 
 /* NAV BAR */
 .footer-nav {
