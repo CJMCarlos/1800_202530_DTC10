@@ -1,7 +1,21 @@
 class SiteNavbar extends HTMLElement {
   connectedCallback() {
     const currentPage = window.location.pathname.split("/").pop();
-    const isDarkMode = localStorage.getItem("theme") === "dark";
+
+    // detect login status
+    const loggedIn = !!localStorage.getItem("uid");
+    const savedTheme = localStorage.getItem("theme");
+
+    // --- default theme logic ---
+    if (!loggedIn) {
+      document.documentElement.setAttribute("data-theme", "light");
+    } else {
+      const themeToApply = savedTheme === "dark" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", themeToApply);
+    }
+
+    const isDarkMode =
+      document.documentElement.getAttribute("data-theme") === "dark";
 
     this.innerHTML = `
 <nav class="navbar">
@@ -26,6 +40,7 @@ class SiteNavbar extends HTMLElement {
   <a href="about.html" class="${
     currentPage === "about.html" ? "active" : ""
   }">About Us</a>
+
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
     <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor">
       <path d="M480-120q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-480q0-75 28.5-140.5t77-114q48.5-48.5 114-77T480-840q8 0 15 .5t15 2.5q-36 32-57.5 79.5T432-600q0 90 63 153t153 63q46 0 93.5-21.5T821-450q2 7 2.5 14t.5 14q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-120Z"/>
@@ -33,53 +48,39 @@ class SiteNavbar extends HTMLElement {
     <span>${isDarkMode ? "Light" : "Dark"}</span>
   </button>
 </div>
-
-
     `;
 
-    // toggle the dropdown
+    // ============ menu toggle ============
     const links = this.querySelector("#menu");
     const iconBtn = this.querySelector(".icon");
     const themeToggleBtn = this.querySelector("#themeToggle");
 
     iconBtn.addEventListener("click", () => {
-      if (links.style.display === "flex") {
-        links.style.display = "none";
-      } else {
-        links.style.display = "flex";
-      }
+      links.style.display = links.style.display === "flex" ? "none" : "flex";
     });
 
-    // close menu when a link is clicked
     links.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        links.style.display = "none";
-      });
+      link.addEventListener("click", () => (links.style.display = "none"));
     });
 
-    // close menu when clicking outside
     document.addEventListener("click", (e) => {
-      if (!this.contains(e.target)) {
-        links.style.display = "none";
-      }
+      if (!this.contains(e.target)) links.style.display = "none";
     });
 
-    // batman theme toggle
+    // ============ theme toggle ============
     themeToggleBtn.addEventListener("click", () => {
       const isDark =
         document.documentElement.getAttribute("data-theme") === "dark";
+
       const newTheme = isDark ? "light" : "dark";
       document.documentElement.setAttribute("data-theme", newTheme);
-      localStorage.setItem("theme", newTheme);
+
+      if (loggedIn) localStorage.setItem("theme", newTheme);
+
       themeToggleBtn.querySelector("span").textContent = isDark
         ? "Dark"
         : "Light";
     });
-
-    // apply saved theme on load
-    if (isDarkMode) {
-      document.documentElement.setAttribute("data-theme", "dark");
-    }
   }
 }
 
