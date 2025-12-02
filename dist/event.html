@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>My Events | TimeMate</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Scripts -->
+
+    <!-- Theme Checker -->
+    <script>
+      (function () {
+        try {
+          const saved = localStorage.getItem('theme');
+          const theme =
+            saved === 'dark' || saved === 'light'
+              ? saved
+              : 'dark'; // default theme if nothing saved
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <script type="module" crossorigin src="/assets/event-CcuFSKPO.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/firebaseConfig-DPj6AoB7.js">
+    <link rel="modulepreload" crossorigin href="/assets/index.esm-CXXrB3IR.js">
+    <link rel="modulepreload" crossorigin href="/assets/site-navbar-CbIaobPa.js">
+    <link rel="stylesheet" crossorigin href="/assets/firebaseConfig-DmafGGRW.css">
+    <link rel="stylesheet" crossorigin href="/assets/event-CN_Wj-yT.css">
+  </head>
+
+  <body class="body-bg">
+    <div class="page-wrapper">
+      <site-navbar></site-navbar>
+
+      <main class="page-container">
+        <!-- Header -->
+        <div class="event-header">
+          <h3 class="page-title">My Events</h3>
+          <button class="add-btn" id="addEventBtn">+ Add</button>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="event-search">
+          <div class="search-wrapper">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="🔍 Search events..."
+              autocomplete="off"
+            />
+            <button id="clearSearch" class="clear-btn">✕</button>
+          </div>
+        </div>
+
+        <!-- Task List Container -->
+        <div id="eventList"></div>
+        <template id="EventCard">
+          <div class="evt-card">
+            <div class="evt-top">
+              <div class="evt-left">
+                <!-- Checkbox -->
+                <label class="evt-check">
+                  <input type="checkbox" class="complete-toggle" />
+                  <svg class="check-icon" viewBox="0 0 24 24">
+                    <path
+                      d="M20 6L9 17l-5-5"
+                      stroke="white"
+                      stroke-width="3"
+                      fill="none"
+                    />
+                  </svg>
+                </label>
+
+                <!-- Info -->
+                <div class="evt-info">
+                  <div class="evt-row">
+                    <h5 class="evt-title"></h5>
+                    <small class="evt-date"></small>
+                  </div>
+                  <p class="evt-desc"></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="evt-actions">
+              <button class="evt-btn edit-btn">Edit</button>
+              <button class="evt-btn evt-btn-danger delete-btn">Delete</button>
+            </div>
+          </div>
+        </template>
+      </main>
+
+      <site-footer></site-footer>
+    </div>
+
+  </body>
+</html>
